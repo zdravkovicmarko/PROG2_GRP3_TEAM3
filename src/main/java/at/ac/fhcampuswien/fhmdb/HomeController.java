@@ -53,17 +53,20 @@ public class HomeController implements Initializable {
         genreComboBox.getItems().addAll("BIOGRAPHY");
         genreComboBox.getItems().addAll("COMEDY");
         genreComboBox.getItems().addAll("CRIME");
-        genreComboBox.getItems().addAll("DOCUMENTARY");
         genreComboBox.getItems().addAll("DRAMA");
+        genreComboBox.getItems().addAll("DOCUMENTARY");
         genreComboBox.getItems().addAll("FAMILY");
         genreComboBox.getItems().addAll("FANTASY");
         genreComboBox.getItems().addAll("HISTORY");
+        genreComboBox.getItems().addAll("HORROR");
         genreComboBox.getItems().addAll("MUSICAL");
         genreComboBox.getItems().addAll("MYSTERY");
         genreComboBox.getItems().addAll("ROMANCE");
         genreComboBox.getItems().addAll("SCIENCE FICTION");
+        genreComboBox.getItems().addAll("SPORT");
         genreComboBox.getItems().addAll("THRILLER");
         genreComboBox.getItems().addAll("WAR");
+        genreComboBox.getItems().addAll("WESTERN");
 
 
 
