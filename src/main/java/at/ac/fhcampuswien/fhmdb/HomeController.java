@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import javafx.scene.input.KeyCode;
 
 public class HomeController implements Initializable {
     @FXML
@@ -103,6 +104,14 @@ public class HomeController implements Initializable {
             }
         });
 
+        searchField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                List<Movie> matchingMovies = findUsingStream();
+                ObservableList<Movie> observableMatchingMovies = FXCollections.observableArrayList(matchingMovies);
+                movieListView.setItems(observableMatchingMovies);
+                movieListView.setCellFactory(movieListView -> new MovieCell());
+            }
+        });
 
     }
 }
