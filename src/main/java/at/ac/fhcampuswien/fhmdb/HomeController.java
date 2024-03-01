@@ -46,6 +46,26 @@ public class HomeController implements Initializable {
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
+        genreComboBox.getItems().addAll("ALL");
+        genreComboBox.getItems().addAll("ACTION");
+        genreComboBox.getItems().addAll("ADVENTURE");
+        genreComboBox.getItems().addAll("ANIMATION");
+        genreComboBox.getItems().addAll("BIOGRAPHY");
+        genreComboBox.getItems().addAll("COMEDY");
+        genreComboBox.getItems().addAll("CRIME");
+        genreComboBox.getItems().addAll("DOCUMENTARY");
+        genreComboBox.getItems().addAll("DRAMA");
+        genreComboBox.getItems().addAll("FAMILY");
+        genreComboBox.getItems().addAll("FANTASY");
+        genreComboBox.getItems().addAll("HISTORY");
+        genreComboBox.getItems().addAll("MUSICAL");
+        genreComboBox.getItems().addAll("MYSTERY");
+        genreComboBox.getItems().addAll("ROMANCE");
+        genreComboBox.getItems().addAll("SCIENCE FICTION");
+        genreComboBox.getItems().addAll("THRILLER");
+        genreComboBox.getItems().addAll("WAR");
+
+
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
