@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
@@ -41,8 +42,7 @@ public class HomeController implements Initializable {
         String search = searchField.getText().trim().toLowerCase();
         List<Movie> matchingMovies = allMovies.stream()
                 .filter(movie -> movie.getTitle().toLowerCase().contains(search) ||
-                        movie.getDescription().toLowerCase().contains(search) ||
-                        movie.getGenres().stream().anyMatch(genre -> genre.toLowerCase().contains(search)))
+                        movie.getDescription().toLowerCase().contains(search))
                 .collect(Collectors.toList());
 
         return matchingMovies;
