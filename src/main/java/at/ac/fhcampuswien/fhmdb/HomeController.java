@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class HomeController implements Initializable {
     @FXML
@@ -35,6 +36,17 @@ public class HomeController implements Initializable {
     public List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+
+    public List<Movie> findUsingStream() {
+        String search = searchField.getText().trim().toLowerCase();
+        List<Movie> matchingMovies = allMovies.stream()
+                .filter(movie -> movie.getTitle().toLowerCase().contains(search) ||
+                        movie.getDescription().toLowerCase().contains(search) ||
+                        movie.getGenres().stream().anyMatch(genre -> genre.toLowerCase().contains(search)))
+                .collect(Collectors.toList());
+
+        return matchingMovies;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,6 +84,13 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
+
+        searchBtn.setOnAction(event -> {
+            List<Movie> matchingMovies = findUsingStream();
+            ObservableList<Movie> observableMatchingMovies = FXCollections.observableArrayList(matchingMovies);
+            movieListView.setItems(observableMatchingMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell());
+        });
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
