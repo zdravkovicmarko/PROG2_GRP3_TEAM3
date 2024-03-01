@@ -31,7 +31,8 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
-    public List<Movie> allMovies = Movie.initializeMovies();
+    public String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
+    public List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
