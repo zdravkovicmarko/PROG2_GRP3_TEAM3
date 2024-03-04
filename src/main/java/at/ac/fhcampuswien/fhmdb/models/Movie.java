@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.zin.models;
+package at.ac.fhcampuswien.fhmdb.models;
 
 import java.io.*;
 import java.util.ArrayList;

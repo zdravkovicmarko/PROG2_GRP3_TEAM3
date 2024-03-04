@@ -1,6 +1,6 @@
-package at.ac.fhcampuswien.zin.ui;
+package at.ac.fhcampuswien.fhmdb.ui;
 
-import at.ac.fhcampuswien.zin.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
