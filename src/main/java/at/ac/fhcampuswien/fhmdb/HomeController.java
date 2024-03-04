@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -69,17 +70,15 @@ public class HomeController implements Initializable {
 
     public void eventSearchBtn(){ // Events for search button
         List<Movie> matchingMovies = searchMatch();
-        String searchText = searchField.getText().trim().toLowerCase();
-        String selectedGenre =(String) genreComboBox.getSelectionModel().getSelectedItem();
 
         if (matchingMovies.isEmpty()) {
+            Label label = new Label("No results found");
+            movieListView.setPlaceholder(label);
+            observableMovies.clear(); // Clear any existing movie data
+        } else {
             observableMovies = FXCollections.observableArrayList(matchingMovies);
             movieListView.setItems(observableMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
-        } else {
-        observableMovies = FXCollections.observableArrayList(matchingMovies);
-        movieListView.setItems(observableMovies);
-        movieListView.setCellFactory(movieListView -> new MovieCell());
         }
     }
     public void eventFilterMovies() { // Event for filtering movies based on search and genre
