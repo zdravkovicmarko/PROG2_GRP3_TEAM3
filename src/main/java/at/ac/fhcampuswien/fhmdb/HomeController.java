@@ -49,11 +49,11 @@ public class HomeController implements Initializable {
 
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(genres);
-        genreComboBox.setOnAction(event -> eventFilterMovies()); // Call a new method for filtering movies
+        genreComboBox.setOnAction(event -> eventGenreFilter()); // Call a new method for filtering movies
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> { eventFilterMovies(); });
-        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventFilterMovies(); } });
+        searchBtn.setOnAction(event -> { eventSearchBtn(); });
+        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchBtn(); } });
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> { eventSortBtn(); });
@@ -61,9 +61,12 @@ public class HomeController implements Initializable {
 
     public List<Movie> searchMatch() { // Filters list of all movies based on search substring
         String search = searchField.getText().trim().toLowerCase();
+        String selectedGenre = (String) genreComboBox.getSelectionModel().getSelectedItem();
+
         List<Movie> matchingMovies = allMovies.stream().filter(movie ->
-                movie.getTitle().toLowerCase().contains(search) ||
-                movie.getDescription().toLowerCase().contains(search)).collect(Collectors.toList());
+                (selectedGenre == null || selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre)) &&
+                (search.isEmpty() || movie.getTitle().toLowerCase().contains(search) || movie.getDescription().toLowerCase().contains(search)))
+            .collect(Collectors.toList());
 
         return matchingMovies;
     }
@@ -81,23 +84,26 @@ public class HomeController implements Initializable {
             movieListView.setCellFactory(movieListView -> new MovieCell());
         }
     }
-    public void eventFilterMovies() { // Event for filtering movies based on search and genre
+
+    public void eventGenreFilter() { // Event for genre filtering
         String searchText = searchField.getText().trim().toLowerCase();
         String selectedGenre = (String) genreComboBox.getSelectionModel().getSelectedItem();
 
         // Filter movies based on search text and selected genre
-        List<Movie> matchingMovies = allMovies.stream()
-                .filter(movie -> (selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre))
-                        && (searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText)
-                        || movie.getDescription().toLowerCase().contains(searchText)))
-                .collect(Collectors.toList());
+        List<Movie> matchingMovies = allMovies.stream().filter(movie ->
+                (selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre)) &&
+                (searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText) || movie.getDescription().toLowerCase().contains(searchText)))
+            .collect(Collectors.toList());
 
-        // Update observableMovies and movieListView
-        observableMovies.setAll(matchingMovies);
-        eventSortBtn();
-
-        movieListView.setItems(observableMovies);
-        movieListView.setCellFactory(movieListView -> new MovieCell());
+        if (matchingMovies.isEmpty()) {
+            Label label = new Label("No results found");
+            movieListView.setPlaceholder(label);
+            observableMovies.clear(); // Clear any existing movie data
+        } else {
+            observableMovies.setAll(matchingMovies);
+            movieListView.setItems(observableMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell());
+        }
     }
 
     public void eventSortBtn(){ // Events for sort button
