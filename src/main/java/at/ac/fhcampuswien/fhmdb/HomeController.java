@@ -30,8 +30,6 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
-    @FXML
-    public TextField noResult;
     public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
     public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
     private ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
@@ -42,7 +40,6 @@ public class HomeController implements Initializable {
         observableMovies.addAll(allMovies); // Add dummy data to observable list
         movieListView.setItems(observableMovies); // Set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // Use custom cell factory to display data
-        noResult.setOpacity(0);
 
         // Add genre filters
         String[] genres = {"ALL", "ACTION", "ADVENTURE", "ANIMATION", "BIOGRAPHY", "COMEDY", "CRIME",
@@ -51,10 +48,11 @@ public class HomeController implements Initializable {
 
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(genres);
+        genreComboBox.setOnAction(event -> eventFilterMovies()); // Call a new method for filtering movies
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> { eventSearchBtn(); });
-        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchBtn(); } });
+        searchBtn.setOnAction(event -> { eventFilterMovies(); });
+        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventFilterMovies(); } });
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> { eventSortBtn(); });
@@ -71,9 +69,10 @@ public class HomeController implements Initializable {
 
     public void eventSearchBtn(){ // Events for search button
         List<Movie> matchingMovies = searchMatch();
+        String searchText = searchField.getText().trim().toLowerCase();
+        String selectedGenre =(String) genreComboBox.getSelectionModel().getSelectedItem();
 
         if (matchingMovies.isEmpty()) {
-            noResult.setOpacity(1);
             observableMovies = FXCollections.observableArrayList(matchingMovies);
             movieListView.setItems(observableMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
@@ -82,6 +81,24 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);
         movieListView.setCellFactory(movieListView -> new MovieCell());
         }
+    }
+    public void eventFilterMovies() { // Event for filtering movies based on search and genre
+        String searchText = searchField.getText().trim().toLowerCase();
+        String selectedGenre = (String) genreComboBox.getSelectionModel().getSelectedItem();
+
+        // Filter movies based on search text and selected genre
+        List<Movie> matchingMovies = allMovies.stream()
+                .filter(movie -> (selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre))
+                        && (searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText)
+                        || movie.getDescription().toLowerCase().contains(searchText)))
+                .collect(Collectors.toList());
+
+        // Update observableMovies and movieListView
+        observableMovies.setAll(matchingMovies);
+        eventSortBtn();
+
+        movieListView.setItems(observableMovies);
+        movieListView.setCellFactory(movieListView -> new MovieCell());
     }
 
     public void eventSortBtn(){ // Events for sort button
