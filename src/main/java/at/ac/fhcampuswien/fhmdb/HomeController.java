@@ -30,6 +30,8 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
+    @FXML
+    public TextField noResult;
     public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
     public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
     private ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
@@ -40,6 +42,7 @@ public class HomeController implements Initializable {
         observableMovies.addAll(allMovies); // Add dummy data to observable list
         movieListView.setItems(observableMovies); // Set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // Use custom cell factory to display data
+        noResult.setOpacity(0);
 
         // Add genre filters
         String[] genres = {"ALL", "ACTION", "ADVENTURE", "ANIMATION", "BIOGRAPHY", "COMEDY", "CRIME",
@@ -68,9 +71,17 @@ public class HomeController implements Initializable {
 
     public void eventSearchBtn(){ // Events for search button
         List<Movie> matchingMovies = searchMatch();
+
+        if (matchingMovies.isEmpty()) {
+            noResult.setOpacity(1);
+            observableMovies = FXCollections.observableArrayList(matchingMovies);
+            movieListView.setItems(observableMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell());
+        } else {
         observableMovies = FXCollections.observableArrayList(matchingMovies);
         movieListView.setItems(observableMovies);
         movieListView.setCellFactory(movieListView -> new MovieCell());
+        }
     }
 
     public void eventSortBtn(){ // Events for sort button
