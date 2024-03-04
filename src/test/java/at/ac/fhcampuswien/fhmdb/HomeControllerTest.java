@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
     @Test
-    void playing_around_with_first_test(){
+    void playing_around_with_first_test(){ //This test needs to be optimised
         assertTrue(movieExists());
     }
     private boolean movieExists() {
