@@ -22,7 +22,7 @@
          </Label>
          <HBox prefHeight="51.0" prefWidth="475.0" spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
             <children>
-               <JFXButton fx:id="sortBtn" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-red" stylesheets="@styles.css" text="Sort (asc)" textAlignment="CENTER">
+               <JFXButton fx:id="sortBtn" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-red" stylesheets="@styles.css" text="Sort (desc)" textAlignment="CENTER">
                   <style>
                -fx-text-fill: white;
             </style>
@@ -43,6 +43,7 @@
                      <Font name="Hiragino Sans W3" size="13.0" />
                   </font>
                </JFXButton>
+               <Region prefHeight="200.0" prefWidth="200.0" />
             </children>
             <padding>
                <Insets bottom="20.0" left="10.0" top="20.0" />
