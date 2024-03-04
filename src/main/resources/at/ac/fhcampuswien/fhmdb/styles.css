@@ -1,6 +1,6 @@
 
-.background-yellow {
-    -fx-background-color: #f5c518;
+.background-red {
+    -fx-background-color: #cf1717;
 }
 
 .background-black {
@@ -11,16 +11,20 @@
     -fx-background-color: #454545;
 }
 
-.text-yellow {
-    -fx-text-fill: #f5c518;
-}
-
 .text-white {
     -fx-text-fill: #ffffff;
 }
 
+.text-red {
+    -fx-text-fill: #cf1717;
+}
+
 .text-light-gray {
-    -fx-text-fill: #d3d3d3;
+    -fx-text-fill: #c9c9c9;
+}
+
+.text-gray {
+    -fx-text-fill: #a6a6a6;
 }
 
 .list-view .list-cell:even {

@@ -36,10 +36,10 @@ public class MovieCell extends ListCell<Movie> {
             genres.setFont(italicFont);
 
             // Set color scheme & background
-            title.getStyleClass().add("text-yellow");
-            description.getStyleClass().add("text-white");
-            genres.getStyleClass().add("text-light-gray");
-            layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
+            title.getStyleClass().add("text-white");
+            description.getStyleClass().add("text-light-gray");
+            genres.getStyleClass().add("text-gray");
+            layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
 
             // Configure layout
             title.setFont(Font.font(20));
