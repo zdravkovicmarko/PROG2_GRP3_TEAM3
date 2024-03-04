@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class fhmdbApplication extends Application {
+public class FhmdbApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(fhmdbApplication.class.getResource("home-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 890, 620);
-        scene.getStylesheets().add(Objects.requireNonNull(fhmdbApplication.class.getResource("styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("styles.css")).toExternalForm());
         stage.setTitle("ZINEMATIC");
         stage.setScene(scene);
         stage.show();

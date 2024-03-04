@@ -33,7 +33,7 @@ public class HomeController implements Initializable {
     public JFXButton sortBtn;
     public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
     public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
-    private ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
+    public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
