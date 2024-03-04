@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.zin.HomeController">
+   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
+      <padding>
+         <Insets bottom="7.0" left="10.0" top="7.0" />
+      </padding>
+      <children>
+         <HBox minHeight="70.0" minWidth="800.0" prefHeight="50.0" prefWidth="800.0" spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
+            <children>
+               <ImageView fitHeight="38.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@logo.png" />
+                  </image>
+               </ImageView>
+               <JFXButton fx:id="sortBtn" alignment="CENTER" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-purple" stylesheets="@styles.css" text="Sort (desc)" textAlignment="CENTER" translateX="15.0" translateY="5.0">
+                  <style>
+               -fx-text-fill: white;
+            </style>
+                  <font>
+                     <Font name="Hiragino Sans W3" size="13.0" />
+                  </font>
+               </JFXButton>
+               <TextField fx:id="searchField" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Search for movies ..." translateX="15.0" translateY="5.0">
+                  <font>
+                     <Font name="Hiragino Sans W2" size="13.0" />
+                  </font></TextField>
+               <JFXComboBox fx:id="genreComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="15.0" translateY="5.0" />
+               <JFXButton fx:id="searchBtn" alignment="CENTER" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" styleClass="background-purple" stylesheets="@styles.css" text="Filter" textAlignment="CENTER" translateX="15.0" translateY="5.0">
+                  <style>
+               -fx-text-fill: white;
+            </style>
+                  <font>
+                     <Font name="Hiragino Sans W3" size="13.0" />
+                  </font>
+               </JFXButton>
+            </children>
+            <padding>
+               <Insets bottom="20.0" left="10.0" top="20.0" />
+            </padding>
+         </HBox>
+      </children>
+   </HBox>
+   <JFXListView fx:id="movieListView" minHeight="400.0" minWidth="800.0" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+</VBox>

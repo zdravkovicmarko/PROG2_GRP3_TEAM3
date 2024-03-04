@@ -1,9 +1,9 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.zin;
 
-import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.zin.models.Movie;
 import org.junit.jupiter.api.Test;
 
-import static at.ac.fhcampuswien.fhmdb.HomeController.allMovies;
+import static at.ac.fhcampuswien.zin.HomeController.allMovies;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {

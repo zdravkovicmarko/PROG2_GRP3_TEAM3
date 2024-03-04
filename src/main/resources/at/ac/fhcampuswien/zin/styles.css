@@ -1,6 +1,6 @@
 
-.background-red {
-    -fx-background-color: #cf1717;
+.background-purple {
+    -fx-background-color: #611fb7;
 }
 
 .background-black {
@@ -15,8 +15,8 @@
     -fx-text-fill: #ffffff;
 }
 
-.text-red {
-    -fx-text-fill: #cf1717;
+.text-light-purple {
+    -fx-text-fill: #a489d4;
 }
 
 .text-light-gray {

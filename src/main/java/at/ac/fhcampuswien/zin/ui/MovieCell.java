@@ -1,6 +1,6 @@
-package at.ac.fhcampuswien.fhmdb.ui;
+package at.ac.fhcampuswien.zin.ui;
 
-import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.zin.models.Movie;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -38,7 +38,7 @@ public class MovieCell extends ListCell<Movie> {
             // Set color scheme & background
             title.getStyleClass().add("text-white");
             description.getStyleClass().add("text-light-gray");
-            genres.getStyleClass().add("text-gray");
+            genres.getStyleClass().add("text-light-purple");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
 
             // Configure layout
