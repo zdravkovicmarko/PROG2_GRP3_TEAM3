@@ -50,5 +50,6 @@
          </HBox>
       </children>
    </HBox>
+   <TextField fx:id="noResult" promptText="noResult" text="No results found" />
    <JFXListView fx:id="movieListView" minHeight="400.0" minWidth="700.0" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
 </VBox>
