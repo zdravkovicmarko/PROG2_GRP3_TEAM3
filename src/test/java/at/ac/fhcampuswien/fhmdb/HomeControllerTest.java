@@ -3,20 +3,17 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.BooleanSupplier;
-
 import static at.ac.fhcampuswien.fhmdb.HomeController.allMovies;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
     @Test
     void playing_around_with_first_test(){
-        Movie Avatar;
-        assertTrue(movieExists("Avatar"));
+        assertTrue(movieExists());
     }
-    private boolean movieExists(String title) {
+    private boolean movieExists() {
         for (Movie movie : allMovies) {
-            if (movie.getTitle().equals(title)) {
+            if (movie.getTitle().equals("Avatar")) {
                 return true;
             }
         }
