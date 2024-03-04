@@ -10,14 +10,15 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label description = new Label();
     private final Label genres = new Label();
     private final VBox layout = new VBox(title, description, genres);
-    private final Font italicFont = Font.font("Verdana", FontPosture.ITALIC, 12);
+    private final Font titleFont = Font.font("Hiragino Sans W5", 20);
+    private final Font descriptionFont = Font.font("Hiragino Sans W3", 12);
+    private final Font genreFont = Font.font("Hiragino Sans W2", 12);
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -33,7 +34,6 @@ public class MovieCell extends ListCell<Movie> {
             title.setText(movie.getTitle());
             description.setText(movie.getDescription() != null ? movie.getDescription() : "N/A");
             genres.setText(movie.getGenres() != null ? String.join(", ", movie.getGenres()) : "N/A");
-            genres.setFont(italicFont);
 
             // Set color scheme & background
             title.getStyleClass().add("text-white");
@@ -42,9 +42,12 @@ public class MovieCell extends ListCell<Movie> {
             layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
 
             // Configure layout
-            title.setFont(Font.font(20));
+            title.setFont(titleFont);
             description.setMaxWidth(getScene().getWidth() - 30);
             description.setWrapText(true);
+            description.setFont(descriptionFont);
+            genres.setFont(genreFont);
+
             layout.setPadding(new Insets(10));
             layout.setSpacing(10);
             layout.setAlignment(Pos.CENTER_LEFT);

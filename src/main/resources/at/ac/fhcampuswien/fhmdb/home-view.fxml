@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXListView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
+<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
    <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
       <padding>
          <Insets bottom="7.0" left="10.0" top="7.0" />
       </padding>
       <children>
-         <Label style="-fx-background-color: CF1717; -fx-text-fill: white;" text="FHMDb">
-            <font>
-               <Font name="Calibri Bold" size="24.0" />
-            </font>
+         <Label style="-fx-background-color: #cf1717;" text="ZINEMATIC" textFill="WHITE">
             <padding>
                <Insets left="2.0" right="2.0" />
             </padding>
+            <font>
+               <Font name="Hiragino Sans W6" size="20.0" />
+            </font>
          </Label>
-         <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!" />
-      </children>
-   </HBox>
-   <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
-      <children>
-         <JFXButton fx:id="sortBtn" styleClass="background-red" stylesheets="@styles.css" text="Sort (asc)" >
-            <style>
+         <HBox prefHeight="51.0" prefWidth="475.0" spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
+            <children>
+               <JFXButton fx:id="sortBtn" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-red" stylesheets="@styles.css" text="Sort (asc)" textAlignment="CENTER">
+                  <style>
                -fx-text-fill: white;
             </style>
-         </JFXButton>
-         <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb" />
-         <JFXComboBox fx:id="genreComboBox" focusColor="#cf1717" styleClass="filter-combo-box" stylesheets="@styles.css" />
-         <JFXButton fx:id="searchBtn" styleClass="background-red" stylesheets="@styles.css" text="Filter" >
-            <style>
+                  <font>
+                     <Font name="Hiragino Sans W3" size="13.0" />
+                  </font>
+               </JFXButton>
+               <TextField fx:id="searchField" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Search for movies ...">
+                  <font>
+                     <Font name="Hiragino Sans W2" size="13.0" />
+                  </font></TextField>
+               <JFXComboBox fx:id="genreComboBox" focusColor="#cf1717" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" styleClass="filter-combo-box" stylesheets="@styles.css" />
+               <JFXButton fx:id="searchBtn" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" styleClass="background-red" stylesheets="@styles.css" text="Filter" textAlignment="CENTER">
+                  <style>
                -fx-text-fill: white;
             </style>
-         </JFXButton>
+                  <font>
+                     <Font name="Hiragino Sans W3" size="13.0" />
+                  </font>
+               </JFXButton>
+            </children>
+            <padding>
+               <Insets bottom="20.0" left="10.0" top="20.0" />
+            </padding>
+         </HBox>
       </children>
-      <VBox.margin>
-         <Insets />
-      </VBox.margin>
-      <padding>
-         <Insets bottom="20.0" left="10.0" top="20.0" />
-      </padding>
    </HBox>
-   <JFXListView fx:id="movieListView" styleClass="background-black" style="-fx-background-color: black;" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+   <JFXListView fx:id="movieListView" minHeight="400.0" minWidth="700.0" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
 </VBox>

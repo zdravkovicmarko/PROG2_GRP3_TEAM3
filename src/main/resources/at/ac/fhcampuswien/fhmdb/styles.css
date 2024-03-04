@@ -45,4 +45,6 @@
 .filter-combo-box {
     -fx-background-color: white;
     -fx-text-fill: #ffffff;
+    -fx-font-family: "Hiragino Sans W2";
+    -fx-font-size: "13.0";
 }
