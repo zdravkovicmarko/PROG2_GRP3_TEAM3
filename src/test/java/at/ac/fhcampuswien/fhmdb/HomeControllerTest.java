@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static at.ac.fhcampuswien.fhmdb.HomeController.allMovies;
+import static at.ac.fhcampuswien.fhmdb.HomeController.observableMovies;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
@@ -96,5 +97,57 @@ HomeController homeController = new HomeController();
         String lastMovie = movies.get(2).getTitle();
         assertEquals(lastMovie, "ZZ_TestFilm1");
 
+    }
+
+    @Test
+    void sorting_movies_alphabetically_ascending_order(){ // Not functional yet
+        // Given
+        List<Movie> movies = new ArrayList<>();
+        List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
+        List<String> genre2 = Arrays.asList("ACTION", "SPORT");
+        List<String> genre3 = Arrays.asList("WAR", "SPORT");
+        List<String> genre4 = Arrays.asList("FAMILY", "SCIENCE FICTION");
+
+        movies.add(new Movie("ZZ_TestFilm26", "This Movie is a test", genre1));
+        movies.add(new Movie("AA_TestFilm1", "This Movie is a test", genre2));
+        movies.add(new Movie("GG_TestFilm3", "This Movie is a test", genre3));
+        movies.add(new Movie("BB_TestFilm2", "This Movie is a test", genre4));
+
+        observableMovies.addAll(movies);
+
+        // When
+        homeController.sortBtn.setText("Sort (asc)");
+        homeController.eventSortBtn();
+
+        // Then
+        List<Movie> sortedMovies = new ArrayList<>(movies);
+        sortedMovies.sort(Comparator.comparing(Movie::getTitle));
+        assertEquals(sortedMovies, observableMovies);
+    }
+
+    @Test
+    void sorting_movies_alphabetically_descending_order(){ // Not functional yet
+        // Given
+        List<Movie> movies = new ArrayList<>();
+        List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
+        List<String> genre2 = Arrays.asList("ACTION", "SPORT");
+        List<String> genre3 = Arrays.asList("WAR", "SPORT");
+        List<String> genre4 = Arrays.asList("FAMILY", "SCIENCE FICTION");
+
+        movies.add(new Movie("ZZ_TestFilm26", "This Movie is a test", genre1));
+        movies.add(new Movie("AA_TestFilm1", "This Movie is a test", genre2));
+        movies.add(new Movie("GG_TestFilm3", "This Movie is a test", genre3));
+        movies.add(new Movie("BB_TestFilm2", "This Movie is a test", genre4));
+
+        observableMovies.addAll(movies);
+
+        // When
+        homeController.sortBtn.setText("Sort (desc)");
+        homeController.eventSortBtn();
+
+        // Then
+        List<Movie> sortedMovies = new ArrayList<>(movies);
+        sortedMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+        assertEquals(sortedMovies, observableMovies);
     }
 }
