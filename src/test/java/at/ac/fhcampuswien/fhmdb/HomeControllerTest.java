@@ -100,7 +100,7 @@ HomeController homeController = new HomeController();
     }
 
     @Test
-    void sorting_movies_alphabetically_ascending_order(){ // Not functional yet
+    void sorting_movies_alphabetically_in_ascending_order_and_checking_whether_expected_list_matches_actual_list(){ // Not functional yet
         // Given
         List<Movie> movies = new ArrayList<>();
         List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
@@ -126,7 +126,7 @@ HomeController homeController = new HomeController();
     }
 
     @Test
-    void sorting_movies_alphabetically_descending_order(){ // Not functional yet
+    void sorting_movies_alphabetically_in_descending_order_and_checking_whether_expected_list_matches_actual_list(){ // Not functional yet
         // Given
         List<Movie> movies = new ArrayList<>();
         List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
