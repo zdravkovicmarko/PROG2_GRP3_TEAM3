@@ -31,6 +31,7 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
+    public boolean wantsAscSort = false;
     public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
     public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
@@ -56,7 +57,7 @@ public class HomeController implements Initializable {
         searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchBtn(); } });
 
         // Sort button's event handler
-        sortBtn.setOnAction(actionEvent -> { eventSortBtn(); });
+        sortBtn.setOnAction(actionEvent -> {eventSortButton();});
     }
 
     public List<Movie> searchMatch() { // Filters list of all movies based on search substring
@@ -106,12 +107,20 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void eventSortBtn(){ // Events for sort button
+    public void sortAlphabetically(boolean wantsAscSort, ObservableList<Movie> observableMovies) { // Sorts alphabetically
+        Comparator<Movie> comparator = Comparator.comparing(Movie::getTitle);
+        if (!wantsAscSort) {comparator = comparator.reversed();}
+        observableMovies.sort(comparator);
+    }
+
+    public void eventSortButton(){ // Handles events of sort button (UI element)
         if (sortBtn.getText().equals("Sort (asc)")) {
-            observableMovies.sort(Comparator.comparing(Movie::getTitle)); // Ascending sort by title
+            wantsAscSort = true;
+            sortAlphabetically(wantsAscSort, observableMovies);
             sortBtn.setText("Sort (desc)");
         } else {
-            observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); // Descending sort by title
+            wantsAscSort = false;
+            sortAlphabetically(wantsAscSort, observableMovies);
             sortBtn.setText("Sort (asc)");
         }
     }

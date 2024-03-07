@@ -1,6 +1,9 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static at.ac.fhcampuswien.fhmdb.HomeController.allMovies;
-import static at.ac.fhcampuswien.fhmdb.HomeController.observableMovies;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
@@ -100,7 +102,7 @@ HomeController homeController = new HomeController();
     }
 
     @Test
-    void sorting_movies_alphabetically_in_ascending_order_and_checking_whether_expected_list_matches_actual_list(){ // Not functional yet
+    void sort_movies_alphabetically_asc_and_check_whether_expected_list_matches_actual_list(){
         // Given
         List<Movie> movies = new ArrayList<>();
         List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
@@ -113,11 +115,12 @@ HomeController homeController = new HomeController();
         movies.add(new Movie("GG_TestFilm3", "This Movie is a test", genre3));
         movies.add(new Movie("BB_TestFilm2", "This Movie is a test", genre4));
 
+        ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
+        boolean wantsAscSort = true;
 
         // When
-        homeController.sortBtn.setText("Sort (asc)");
-        homeController.eventSortBtn();
+        homeController.sortAlphabetically(wantsAscSort, observableMovies);
 
         // Then
         List<Movie> sortedMovies = new ArrayList<>(movies);
@@ -126,7 +129,7 @@ HomeController homeController = new HomeController();
     }
 
     @Test
-    void sorting_movies_alphabetically_in_descending_order_and_checking_whether_expected_list_matches_actual_list(){ // Not functional yet
+    void sort_movies_alphabetically_desc_and_check_whether_expected_list_matches_actual_list(){
         // Given
         List<Movie> movies = new ArrayList<>();
         List<String> genre1 = Arrays.asList("ACTION", "COMEDY");
@@ -139,11 +142,12 @@ HomeController homeController = new HomeController();
         movies.add(new Movie("GG_TestFilm3", "This Movie is a test", genre3));
         movies.add(new Movie("BB_TestFilm2", "This Movie is a test", genre4));
 
+        ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
+        boolean wantsAscSort = false;
 
         // When
-        homeController.sortBtn.setText("Sort (desc)");
-        homeController.eventSortBtn();
+        homeController.sortAlphabetically(wantsAscSort, observableMovies);
 
         // Then
         List<Movie> sortedMovies = new ArrayList<>(movies);
