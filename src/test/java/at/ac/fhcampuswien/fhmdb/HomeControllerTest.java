@@ -54,6 +54,7 @@ HomeController homeController = new HomeController();
         movies.add(new Movie("GG_TestFilm3", "This Movie is a test", genre3));
 
         movies.sort(Comparator.comparing(Movie::getTitle));
+
         String secondMovie = movies.get(1).getTitle();
         assertEquals(secondMovie, "GG_TestFilm3");
     }

@@ -49,29 +49,38 @@ public class HomeController implements Initializable {
 
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(genres);
-        genreComboBox.setOnAction(event -> eventGenreFilter()); // Call a new method for filtering movies
+        genreComboBox.setOnAction(event -> searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem())); // Call a new method for filtering movies
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> { eventSearchBtn(); });
-        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchBtn(); } });
+        searchBtn.setOnAction(event -> { searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem()); });
+        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem()); } });
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> { eventSortBtn(); });
     }
 
-    public List<Movie> searchMatch() { // Filters list of all movies based on search substring
-        String search = searchField.getText().trim().toLowerCase();
-        String selectedGenre = (String) genreComboBox.getSelectionModel().getSelectedItem();
+    public void searchMatch(List<Movie> movieList, String searchQuery, String genre) { // Filters list of all movies based on search substring
+        String search = searchQuery.trim().toLowerCase();
 
-        List<Movie> matchingMovies = allMovies.stream().filter(movie ->
-                (selectedGenre == null || selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre)) &&
+        List<Movie> matchingMovies = movieList.stream().filter(movie ->
+                (genre == null || genre.equals("ALL") || movie.getGenres().contains(genre)) &&
                 (search.isEmpty() || movie.getTitle().toLowerCase().contains(search) || movie.getDescription().toLowerCase().contains(search)))
             .collect(Collectors.toList());
 
-        return matchingMovies;
+        if (matchingMovies.isEmpty()) {
+            Label label = new Label("No results found");
+            movieListView.setPlaceholder(label);
+            observableMovies.clear(); // Clear any existing movie data
+        } else {
+            observableMovies = FXCollections.observableArrayList(matchingMovies);
+            movieListView.setItems(observableMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell());
+        }
+
+
     }
 
-    public void eventSearchBtn(){ // Events for search button
+    /*public void eventSearchBtn(){ // Events for search button
         List<Movie> matchingMovies = searchMatch();
 
         if (matchingMovies.isEmpty()) {
@@ -84,27 +93,10 @@ public class HomeController implements Initializable {
             movieListView.setCellFactory(movieListView -> new MovieCell());
         }
     }
+    */
 
-    public void eventGenreFilter() { // Event for genre filtering
-        String searchText = searchField.getText().trim().toLowerCase();
-        String selectedGenre = (String) genreComboBox.getSelectionModel().getSelectedItem();
 
-        // Filter movies based on search text and selected genre
-        List<Movie> matchingMovies = allMovies.stream().filter(movie ->
-                (selectedGenre.equals("ALL") || movie.getGenres().contains(selectedGenre)) &&
-                (searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText) || movie.getDescription().toLowerCase().contains(searchText)))
-            .collect(Collectors.toList());
 
-        if (matchingMovies.isEmpty()) {
-            Label label = new Label("No results found");
-            movieListView.setPlaceholder(label);
-            observableMovies.clear(); // Clear any existing movie data
-        } else {
-            observableMovies.setAll(matchingMovies);
-            movieListView.setItems(observableMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell());
-        }
-    }
 
     public void eventSortBtn(){ // Events for sort button
         if (sortBtn.getText().equals("Sort (asc)")) {
