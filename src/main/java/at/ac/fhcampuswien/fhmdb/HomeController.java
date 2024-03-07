@@ -50,17 +50,17 @@ public class HomeController implements Initializable {
 
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(genres);
-        genreComboBox.setOnAction(event -> searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem())); // Call a new method for filtering movies
+        genreComboBox.setOnAction(event -> eventSearchButton()); // Call a new method for filtering movies
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> { searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem()); });
-        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { searchMatch(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem()); } });
+        searchBtn.setOnAction(event -> { eventSearchButton(); });
+        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchButton(); } });
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> {eventSortButton();});
     }
 
-    public void searchMatch(List<Movie> movieList, String searchQuery, String genre) { // Filters list of all movies based on search substring
+    public List<Movie> filter(List<Movie> movieList, String searchQuery, String genre) { // Filters list of all movies based on search & genres
         String search = searchQuery.trim().toLowerCase();
 
         List<Movie> matchingMovies = movieList.stream().filter(movie ->
@@ -68,21 +68,11 @@ public class HomeController implements Initializable {
                 (search.isEmpty() || movie.getTitle().toLowerCase().contains(search) || movie.getDescription().toLowerCase().contains(search)))
             .collect(Collectors.toList());
 
-        if (matchingMovies.isEmpty()) {
-            Label label = new Label("No results found");
-            movieListView.setPlaceholder(label);
-            observableMovies.clear(); // Clear any existing movie data
-        } else {
-            observableMovies = FXCollections.observableArrayList(matchingMovies);
-            movieListView.setItems(observableMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell());
-        }
-
-
+        return matchingMovies;
     }
 
-    /*public void eventSearchBtn(){ // Events for search button
-        List<Movie> matchingMovies = searchMatch();
+    public void eventSearchButton(){ // Events of search button (UI element)
+        List<Movie> matchingMovies = filter(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem());
 
         if (matchingMovies.isEmpty()) {
             Label label = new Label("No results found");
@@ -94,10 +84,6 @@ public class HomeController implements Initializable {
             movieListView.setCellFactory(movieListView -> new MovieCell());
         }
     }
-    */
-
-
-
 
     public void sortAlphabetically(boolean wantsAscSort, ObservableList<Movie> observableMovies) { // Sorts alphabetically
         Comparator<Movie> comparator = Comparator.comparing(Movie::getTitle);
@@ -105,7 +91,7 @@ public class HomeController implements Initializable {
         observableMovies.sort(comparator);
     }
 
-    public void eventSortButton(){ // Handles events of sort button (UI element)
+    public void eventSortButton(){ // Events of sort button (UI element)
         if (sortBtn.getText().equals("Sort (asc)")) {
             wantsAscSort = true;
             sortAlphabetically(wantsAscSort, observableMovies);

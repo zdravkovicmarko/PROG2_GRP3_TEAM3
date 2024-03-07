@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
@@ -96,7 +95,7 @@ HomeController homeController = new HomeController();
 
         movies.sort(Comparator.comparing(Movie::getTitle));
         homeController.searchField.setText(search);
-        homeController.eventSearchBtn();
+        homeController.eventSearchButton();
         String lastMovie = movies.get(2).getTitle();
         assertEquals(lastMovie, "ZZ_TestFilm1");
 
