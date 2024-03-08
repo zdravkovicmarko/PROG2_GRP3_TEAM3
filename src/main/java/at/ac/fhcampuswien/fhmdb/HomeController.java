@@ -31,7 +31,6 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
-    public boolean wantsAscSort = false;
     public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
     public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
@@ -93,12 +92,10 @@ public class HomeController implements Initializable {
 
     public void eventSortButton(){ // Events of sort button (UI element)
         if (sortBtn.getText().equals("Sort (asc)")) {
-            wantsAscSort = true;
-            sortAlphabetically(wantsAscSort, observableMovies);
+            sortAlphabetically(true, observableMovies);
             sortBtn.setText("Sort (desc)");
         } else {
-            wantsAscSort = false;
-            sortAlphabetically(wantsAscSort, observableMovies);
+            sortAlphabetically(false, observableMovies);
             sortBtn.setText("Sort (asc)");
         }
     }

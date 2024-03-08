@@ -117,10 +117,9 @@ HomeController homeController = new HomeController();
 
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
-        boolean wantsAscSort = true;
 
         // When
-        homeController.sortAlphabetically(wantsAscSort, observableMovies);
+        homeController.sortAlphabetically(true, observableMovies);
 
         // Then
         List<Movie> sortedMovies = new ArrayList<>(movies);
@@ -144,10 +143,9 @@ HomeController homeController = new HomeController();
 
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
-        boolean wantsAscSort = false;
 
         // When
-        homeController.sortAlphabetically(wantsAscSort, observableMovies);
+        homeController.sortAlphabetically(false, observableMovies);
 
         // Then
         List<Movie> sortedMovies = new ArrayList<>(movies);
