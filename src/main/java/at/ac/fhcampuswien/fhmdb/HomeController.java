@@ -61,8 +61,8 @@ public class HomeController implements Initializable {
 
     public List<Movie> filter(List<Movie> movieList, String searchQuery, String genre) { // Filters list of all movies based on search & genres
         String search = searchQuery.trim().toLowerCase();
-
-        List<Movie> matchingMovies = movieList.stream().filter(movie ->
+        List<Movie> matchingMovies = movieList.stream()
+            .filter(movie ->
                 (genre == null || genre.equals("ALL") || movie.getGenres().contains(genre)) &&
                 (search.isEmpty() || movie.getTitle().toLowerCase().contains(search) || movie.getDescription().toLowerCase().contains(search)))
             .collect(Collectors.toList());
