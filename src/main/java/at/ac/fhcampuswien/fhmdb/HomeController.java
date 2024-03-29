@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -38,6 +39,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialize UI stuff
+
         observableMovies.addAll(allMovies); // Add dummy data to observable list
         movieListView.setItems(observableMovies); // Set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // Use custom cell factory to display data

@@ -1,19 +1,40 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import com.google.gson.JsonArray;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
+    private String id;
     private String title;
+    private JsonArray genres;
+    private int releaseYear;
     private String description;
-    private List<String> genres;
+    private String imgUrl;
+    private int lengthInMinutes;
+    private JsonArray directors;
+    private JsonArray writers;
+    private JsonArray mainCast;
+    private double rating;
 
-    public Movie(String title, String description, List<String> genres) {
+    public Movie(String id, String title, JsonArray genres, int releaseYear, String description, String imgUrl, int lengthInMinutes,
+                 JsonArray directors, JsonArray writers, JsonArray mainCast, double rating) {
+
+        this.id = id;
         this.title = title;
-        this.description = description;
         this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.lengthInMinutes = lengthInMinutes;
+        this.directors = directors;
+        this.writers = writers;
+        this.mainCast = mainCast;
+        this.rating = rating;
+
     }
 
     public String getTitle() {
