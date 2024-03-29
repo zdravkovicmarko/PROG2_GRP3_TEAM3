@@ -1,6 +1,5 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +9,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static at.ac.fhcampuswien.fhmdb.HomeController.allMovies;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
