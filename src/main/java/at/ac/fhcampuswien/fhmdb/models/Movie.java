@@ -1,27 +1,22 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import com.google.gson.JsonArray;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
     private String id;
     private String title;
-    private JsonArray genres;
+    private List<String> genres;
     private int releaseYear;
     private String description;
     private String imgUrl;
     private int lengthInMinutes;
-    private JsonArray directors;
-    private JsonArray writers;
-    private JsonArray mainCast;
+    private List<String> directors;
+    private List<String> writers;
+    private List<String> mainCast;
     private double rating;
 
-    public Movie(String id, String title, JsonArray genres, int releaseYear, String description, String imgUrl, int lengthInMinutes,
-                 JsonArray directors, JsonArray writers, JsonArray mainCast, double rating) {
+    public Movie(String id, String title, List<String> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes,
+                 List<String> directors, List<String> writers, List<String> mainCast, double rating) {
 
         this.id = id;
         this.title = title;
@@ -34,7 +29,6 @@ public class Movie {
         this.writers = writers;
         this.mainCast = mainCast;
         this.rating = rating;
-
     }
 
     public String getTitle() {
@@ -48,24 +42,5 @@ public class Movie {
     public List<String> getGenres() {
         return genres;
     }
-    public static List<Movie> initializeMovies(String filepath){
-        List<Movie> movies = new ArrayList<>();
 
-        try(BufferedReader br = new BufferedReader(new FileReader(filepath))){
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length >= 3) {
-                    String title = parts[0];
-                    String description = parts[1];
-                    List<String> genres = Arrays.asList(Arrays.copyOfRange(parts, 2, parts.length));
-                    movies.add(new Movie(title, description, genres));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return movies;
-    }
 }

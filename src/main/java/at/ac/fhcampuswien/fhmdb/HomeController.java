@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -32,8 +33,17 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
-    public static String movieListFilepath = "src/main/resources/at/ac/fhcampuswien/fhmdb/movies.txt";
-    public static List<Movie> allMovies = Movie.initializeMovies(movieListFilepath);
+    public static MovieAPI movieAPI = new MovieAPI();
+    public static List<Movie> allMovies;
+
+    static {
+        try {
+            allMovies = movieAPI.fetchMovies(null,null,0,0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
 
     @Override

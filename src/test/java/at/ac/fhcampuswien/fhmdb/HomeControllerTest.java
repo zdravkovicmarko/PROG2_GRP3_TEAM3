@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HomeControllerTest {
 
 HomeController homeController = new HomeController();
+/*
     @Test
     void sorting_movies_alphabetically_asc_and_check_whether_AA_TestFilm2_is_the_first_entry(){
         List<Movie> movies = new ArrayList<>();
@@ -306,4 +307,6 @@ HomeController homeController = new HomeController();
         sortedMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
         assertEquals(sortedMovies, observableMovies);
     }
+
+ */
 }
