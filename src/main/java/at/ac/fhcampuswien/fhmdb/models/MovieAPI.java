@@ -21,9 +21,11 @@ public class MovieAPI {
         this.client = new OkHttpClient();
     }
 
+    // Method to fetch movies from API
     public List<Movie> fetchMovies(String query, String genre, int releaseYear, int ratingFrom) throws IOException {
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(BASE_URL)).newBuilder();
 
+        // Add query parameters to URL builder
         if (query != null && !query.isEmpty()) {
             urlBuilder.addQueryParameter("query", query);
         }
@@ -37,11 +39,13 @@ public class MovieAPI {
             urlBuilder.addQueryParameter("ratingFrom", String.valueOf(ratingFrom));
         }
 
+        // Build request
         Request request = new Request.Builder()
                 .url(BASE_URL)
                 .header("User-Agent", USER_AGENT)
                 .build();
 
+        // Execute request & process response
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
@@ -50,14 +54,15 @@ public class MovieAPI {
         }
     }
 
+    // Method to parse JSON data & create Movie objects
     private List<Movie> parseMovies(String jsonData) {
         List<Movie> movies = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(jsonData);
 
         for (int i = 0; i < jsonArray.length(); i++) {
-
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+            // Extract movie attributes from JSON object
             String id = jsonObject.getString("id");
             String title = jsonObject.getString("title");
 
@@ -92,8 +97,27 @@ public class MovieAPI {
 
             double rating = jsonObject.getDouble("rating");
 
+            // Create Movie object & add to list
             movies.add(new Movie(id, title, genres, releaseYear, description, imgUrl, lengthInMinutes, directors, writers, mainCast, rating));
         }
+
+        // Print out all movie objects for debugging
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Movie movie : movies) {
+            stringBuilder.append("Title: ").append(movie.getTitle()).append("\n");
+            stringBuilder.append("Description: ").append(movie.getDescription()).append("\n");
+            stringBuilder.append("Genres: ").append(movie.getGenres()).append("\n");
+            stringBuilder.append("Release Year: ").append(movie.getReleaseYear()).append("\n");
+            stringBuilder.append("Img Url: ").append(movie.getImgUrl()).append("\n");
+            stringBuilder.append("Length in Minutes: ").append(movie.getLengthInMinutes()).append("\n");
+            stringBuilder.append("Directors: ").append(movie.getDirectors()).append("\n");
+            stringBuilder.append("Writers: ").append(movie.getWriters()).append("\n");
+            stringBuilder.append("Main Cast: ").append(movie.getMainCast()).append("\n");
+            stringBuilder.append("Rating: ").append(movie.getRating()).append("\n");
+            stringBuilder.append("\n");
+        }
+        System.out.println(stringBuilder.toString());
+
         return movies;
     }
 }

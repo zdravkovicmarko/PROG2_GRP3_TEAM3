@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +28,10 @@ public class HomeController implements Initializable {
     public JFXListView movieListView;
     @FXML
     public JFXComboBox genreComboBox;
+    @FXML
+    public JFXComboBox releaseYearComboBox;
+    @FXML
+    public JFXComboBox ratingComboBox;
     @FXML
     public JFXButton searchBtn;
     @FXML
@@ -46,32 +51,46 @@ public class HomeController implements Initializable {
 
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // Automatically updates corresponding UI elements when underlying data changes
 
+    // Initialize UI stuff
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize UI stuff
 
         observableMovies.addAll(allMovies); // Add dummy data to observable list
         movieListView.setItems(observableMovies); // Set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // Use custom cell factory to display data
 
-        // Add genre filters
+        // Populate combo boxes
         String[] genres = {"ALL", "ACTION", "ADVENTURE", "ANIMATION", "BIOGRAPHY", "COMEDY", "CRIME",
                 "DRAMA", "DOCUMENTARY", "FAMILY", "FANTASY", "HISTORY", "HORROR", "MUSICAL",
                 "MYSTERY", "ROMANCE", "SCIENCE_FICTION", "SPORT", "THRILLER", "WAR", "WESTERN"};
 
-        genreComboBox.setPromptText("Filter by Genre");
+        List<String> releaseYears = new ArrayList<>();
+        for (int year = 2025; year >= 1895; year--) {
+            releaseYears.add(String.valueOf(year));
+        }
+
+        List<String> ratings = new ArrayList<>();
+        for (double rating = 10.0; rating >= 0.0; rating -= 0.1) {
+            ratings.add(String.format("%.1f", rating));
+        }
+
         genreComboBox.getItems().addAll(genres);
-        genreComboBox.setOnAction(event -> eventSearchButton()); // Call a new method for filtering movies
+        releaseYearComboBox.getItems().addAll(releaseYears);
+        ratingComboBox.getItems().addAll(ratings);
+
+        // Combo boxes' event handlers
+        genreComboBox.setOnAction(event -> eventSearchButton());
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> { eventSearchButton(); });
+        searchBtn.setOnAction(event -> eventSearchButton());
         searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchButton(); } });
 
         // Sort button's event handler
-        sortBtn.setOnAction(actionEvent -> {eventSortButton();});
+        sortBtn.setOnAction(actionEvent -> eventSortButton());
     }
 
-    public List<Movie> filter(List<Movie> movieList, String searchQuery, String genre) { // Filters list of all movies based on search & genres
+    // Filters list of all movies based on search & genres
+    public List<Movie> filter(List<Movie> movieList, String searchQuery, String genre) {
         String search = searchQuery.trim().toLowerCase();
         List<Movie> matchingMovies = movieList.stream()
             .filter(movie ->
@@ -82,7 +101,8 @@ public class HomeController implements Initializable {
         return matchingMovies;
     }
 
-    public void eventSearchButton(){ // Events of search button (UI element)
+    // Events of search button (UI element)
+    public void eventSearchButton(){
         List<Movie> matchingMovies = filter(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem());
 
         if (matchingMovies.isEmpty()) {
@@ -96,13 +116,15 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void sortAlphabetically(boolean wantsAscSort, ObservableList<Movie> observableMovies) { // Sorts alphabetically
+    // Sorts alphabetically
+    public void sortAlphabetically(boolean wantsAscSort, ObservableList<Movie> observableMovies) {
         Comparator<Movie> comparator = Comparator.comparing(Movie::getTitle);
         if (!wantsAscSort) {comparator = comparator.reversed();}
         observableMovies.sort(comparator);
     }
 
-    public void eventSortButton(){ // Events of sort button (UI element)
+    // Events of sort button (UI element)
+    public void eventSortButton(){
         if (sortBtn.getText().equals("Sort (asc)")) {
             sortAlphabetically(true, observableMovies);
             sortBtn.setText("Sort (desc)");
