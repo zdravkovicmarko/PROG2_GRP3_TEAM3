@@ -15,10 +15,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javafx.scene.input.KeyCode;
@@ -132,5 +130,35 @@ public class HomeController implements Initializable {
             sortAlphabetically(false, observableMovies);
             sortBtn.setText("Sort (asc)");
         }
+    }
+
+    public String getMostPopularActor(List<Movie> movies) {
+        Map<String, Long> actorCount = movies.stream()
+                .flatMap(movie -> movie.getMainCast().stream()) // Putting together all the Main Casts from all movies
+                .collect(Collectors.groupingBy(actor -> actor, Collectors.counting())); // counting the number of appearances
+
+        Optional<Map.Entry<String, Long>> mostPopularActor = actorCount.entrySet().stream()
+                .max(Map.Entry.comparingByValue()); // finds the actor with the most appearances
+
+        return mostPopularActor.map(Map.Entry::getKey).orElse(null); // returns the actor/actress with the most appearances
+    }
+
+    public int getLongestMovieTitle(List<Movie> movies) {
+        return movies.stream()
+                .mapToInt(movie -> movie.getTitle().length())
+                .max()
+                .orElse(0);
+    }
+
+    public long countMoviesFrom(List<Movie> movies, String director) {
+        return movies.stream()
+                .filter(movie -> movie.getDirectors().equals(director))
+                .count();
+    }
+
+    public List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+        return movies.stream()
+                .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
+                .collect(Collectors.toList());
     }
 }
