@@ -167,8 +167,14 @@ public class HomeController implements Initializable {
     }
 
     public List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        return movies.stream()
-                .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
-                .collect(Collectors.toList());
+        if (startYear > endYear) {
+            return movies.stream()
+                    .filter(movie -> movie.getReleaseYear() >= endYear && movie.getReleaseYear() <= startYear)
+                    .collect(Collectors.toList());
+        } else {
+            return movies.stream()
+                    .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
+                    .collect(Collectors.toList());
+        }
     }
 }
