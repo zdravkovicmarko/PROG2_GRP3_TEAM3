@@ -68,7 +68,7 @@ public class HomeController implements Initializable {
         }
 
         List<String> ratings = new ArrayList<>();
-        for (double rating = 10.0; rating >= 0.0; rating -= 0.1) {
+        for (double rating = 10.0; rating >= 0.0; rating -= 0.5) {
             ratings.add(String.format("%.1f", rating));
         }
 

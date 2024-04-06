@@ -20,7 +20,7 @@
                      <Image url="@logo.png" />
                   </image>
                </ImageView>
-               <JFXButton fx:id="sortBtn" alignment="CENTER" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-purple" stylesheets="@styles.css" text="Sort (asc)" textAlignment="CENTER" translateX="15.0" translateY="5.0">
+               <JFXButton fx:id="sortBtn" alignment="CENTER" minHeight="25.0" minWidth="90.0" prefHeight="25.0" prefWidth="90.0" styleClass="background-purple" stylesheets="@styles.css" text="Sort (asc)" textAlignment="CENTER" translateX="10.0" translateY="5.0">
                   <style>
                -fx-text-fill: white;
             </style>
@@ -32,10 +32,10 @@
                   <font>
                      <Font name="Hiragino Sans W2" size="13.0" />
                   </font></TextField>
-               <JFXComboBox fx:id="genreComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Filter by Genre" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="15.0" translateY="5.0" />
-               <JFXComboBox fx:id="releaseYearComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Filter by Release Year" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="15.0" translateY="5.0" />
-               <JFXComboBox fx:id="ratingComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Filter by Rating" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="15.0" translateY="5.0" />
-               <JFXButton fx:id="searchBtn" alignment="CENTER" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" styleClass="background-purple" stylesheets="@styles.css" text="Filter" textAlignment="CENTER" translateX="15.0" translateY="5.0">
+               <JFXComboBox fx:id="genreComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Genre" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="20.0" translateY="5.0" />
+               <JFXComboBox fx:id="releaseYearComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" promptText="Release Year" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="25.0" translateY="5.0" />
+               <JFXComboBox fx:id="ratingComboBox" focusColor="#611fb7" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" promptText="Rating From" styleClass="filter-combo-box" stylesheets="@styles.css" translateX="30.0" translateY="5.0" />
+               <JFXButton fx:id="searchBtn" alignment="CENTER" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" styleClass="background-purple" stylesheets="@styles.css" text="Filter" textAlignment="CENTER" translateX="35.0" translateY="5.0">
                   <style>
                -fx-text-fill: white;
             </style>
