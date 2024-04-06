@@ -133,13 +133,13 @@ public class HomeController implements Initializable {
     }
 
     public String getMostPopularActor(List<Movie> movies) {
-        return movies.stream() // Convert the list of movies into a Stream of Movie objects
-                .flatMap(movie -> movie.getMainCast().stream()) // Flatten the Stream of Movie objects into a Stream of actors in the main cast of each movie
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Collect the Stream of actors into a Map where keys are actors and values are their counts
-                .entrySet().stream() // Convert the Map into a Stream of Map.Entry objects
-                .max(Map.Entry.comparingByValue()) // Find the maximum entry in the stream based on the values (counts of actors)
-                .map(Map.Entry::getKey) // Extract the key (actor) from the maximum entry
-                .orElse(null); // Return the most popular actor's name, or null if the stream is empty
+        return movies.stream() // Convert movie list into movie objects stream
+                .flatMap(movie -> movie.getMainCast().stream()) // Flatten movie stream objects into actors stream of movie's main cast
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Collect actors stream into map of keys (actors) & values (counts)
+                .entrySet().stream() // Convert map into stream of map.entry objects
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey) // Extract key (actor) from max entry
+                .orElse(null);
     }
 
     public int getLongestMovieTitle(List<Movie> movies) {
