@@ -69,7 +69,7 @@ public class HomeController implements Initializable {
 
         List<String> ratings = new ArrayList<>();
         for (double rating = 10.0; rating >= 0.0; rating -= 0.5) {
-            ratings.add(String.format("%.1f", rating));
+            ratings.add(String.format(Locale.ENGLISH, "%.1f", rating));
         }
 
         genreComboBox.getItems().addAll(genres);
@@ -77,40 +77,51 @@ public class HomeController implements Initializable {
         ratingComboBox.getItems().addAll(ratings);
 
         // Combo boxes' event handlers
-        genreComboBox.setOnAction(event -> eventSearchButton());
+        genreComboBox.setOnAction(event -> eventFilter());
+        releaseYearComboBox.setOnAction(event -> eventFilter());
+        ratingComboBox.setOnAction(event -> eventFilter());
 
         // Search button's event handlers
-        searchBtn.setOnAction(event -> eventSearchButton());
-        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventSearchButton(); } });
+        searchBtn.setOnAction(event -> eventFilter());
+        searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventFilter(); } });
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> eventSortButton());
     }
 
-    // Filters list of all movies based on search & genres
-    public List<Movie> filter(List<Movie> movieList, String searchQuery, String genre) {
-        String search = searchQuery.trim().toLowerCase();
-        List<Movie> matchingMovies = movieList.stream()
-            .filter(movie ->
-                (genre == null || genre.equals("ALL") || movie.getGenres().contains(genre)) &&
-                (search.isEmpty() || movie.getTitle().toLowerCase().contains(search) || movie.getDescription().toLowerCase().contains(search)))
-            .collect(Collectors.toList());
+    // Events for filtering
+    public void eventFilter() {
+        // Get parameters from UI elements
+        String searchQuery = searchField.getText();
+        String genre = (String) genreComboBox.getSelectionModel().getSelectedItem();
+        String releaseYear = (String) releaseYearComboBox.getSelectionModel().getSelectedItem();
+        String rating = (String) ratingComboBox.getSelectionModel().getSelectedItem();
 
-        return matchingMovies;
-    }
+        int releaseYearValue = 0;
+        if (releaseYear != null && !releaseYear.isEmpty() && !releaseYear.equals("ALL")) {
+            releaseYearValue = Integer.parseInt(releaseYear);
+        }
+        double ratingValue = 0.0;
+        if (rating != null && !rating.isEmpty() && !rating.equals("ALL")) {
+            ratingValue = Double.parseDouble(rating);
+        }
 
-    // Events of search button (UI element)
-    public void eventSearchButton(){
-        List<Movie> matchingMovies = filter(allMovies, searchField.getText(), (String) genreComboBox.getSelectionModel().getSelectedItem());
+        // Fetch movies based on search parameters
+        try {
+            List<Movie> matchingMovies = movieAPI.fetchMovies(searchQuery, genre, releaseYearValue, ratingValue);
 
-        if (matchingMovies.isEmpty()) {
-            Label label = new Label("No results found");
-            movieListView.setPlaceholder(label);
-            observableMovies.clear(); // Clear any existing movie data
-        } else {
-            observableMovies = FXCollections.observableArrayList(matchingMovies);
-            movieListView.setItems(observableMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell());
+            // Update UI with matching movies
+            if (matchingMovies.isEmpty()) {
+                Label label = new Label("No results found");
+                movieListView.setPlaceholder(label);
+                observableMovies.clear(); // Clear any existing movie data
+            } else {
+                observableMovies = FXCollections.observableArrayList(matchingMovies);
+                movieListView.setItems(observableMovies);
+                movieListView.setCellFactory(movieListView -> new MovieCell());
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle or log the exception accordingly
         }
     }
 

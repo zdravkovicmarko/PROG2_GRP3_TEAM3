@@ -22,7 +22,7 @@ public class MovieAPI {
     }
 
     // Method to fetch movies from API
-    public List<Movie> fetchMovies(String query, String genre, int releaseYear, int ratingFrom) throws IOException {
+    public List<Movie> fetchMovies(String query, String genre, int releaseYear, double ratingFrom) throws IOException {
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(BASE_URL)).newBuilder();
 
         // Add query parameters to URL builder
@@ -41,7 +41,7 @@ public class MovieAPI {
 
         // Build request
         Request request = new Request.Builder()
-                .url(BASE_URL)
+                .url(urlBuilder.toString())
                 .header("User-Agent", USER_AGENT)
                 .build();
 
@@ -116,7 +116,7 @@ public class MovieAPI {
             stringBuilder.append("Rating: ").append(movie.getRating()).append("\n");
             stringBuilder.append("\n");
         }
-        System.out.println(stringBuilder.toString());
+        System.out.println();
 
         return movies;
     }
