@@ -1,9 +1,9 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.models.MovieAPI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -14,21 +14,28 @@ class HomeControllerTest {
 
 HomeController homeController = new HomeController();
 
+List<Movie> movies = new ArrayList<>();
+
+@BeforeEach
+public void movieList() {
+
+    Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023, "In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.", "https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"), 7.6);
+    Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
+    Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
+    Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
+    Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
+
+    movies.add(movie1);
+    movies.add(movie2);
+    movies.add(movie3);
+    movies.add(movie4);
+    movies.add(movie5);
+}
+
+
     @Test
     void sorting_movies_alphabetically_asc_and_check_whether_Inception_is_the_first_entry(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         movies.sort(Comparator.comparing(Movie::getTitle));
@@ -40,19 +47,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void sorting_movies_alphabetically_asc_and_check_whether_The_Boy_and_the_Heron_is_the_second_entry(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         movies.sort(Comparator.comparing(Movie::getTitle));
@@ -64,19 +59,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void sorting_movies_alphabetically_asc_and_check_whether_The_Shawshank_is_the_last_entry(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         movies.sort(Comparator.comparing(Movie::getTitle));
@@ -88,21 +71,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void sort_movies_alphabetically_asc_and_check_whether_expected_list_matches_actual_list(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
-
+        // Given initialized in movieList
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
 
@@ -117,21 +86,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void sort_movies_alphabetically_desc_and_check_whether_expected_list_matches_actual_list(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
-
+        // Given MovieList initialized in movieList
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
         observableMovies.addAll(movies);
 
@@ -183,19 +138,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void getMostPopularActor_returns_correct_actor_if_appearing_multiple_times() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         String actor = homeController.getMostPopularActor(movies);
@@ -244,19 +187,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void getLongestMovieTitle_returns_longest_title_length() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         int longestTitle = homeController.getLongestMovieTitle(movies);
@@ -268,19 +199,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void countMoviesFrom_returns_0_if_no_movies_from_the_director_are_in_the_list() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         long numberOfMovies = homeController.countMoviesFrom(movies, "Steven Spielberg");
@@ -329,19 +248,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void countMoviesFrom_returns_actual_number_of_movies_if_director_appears_multiple_times() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         long numberOfMovies = homeController.countMoviesFrom(movies, "Christopher Nolan");
@@ -366,19 +273,7 @@ HomeController homeController = new HomeController();
 
     @Test
     void getMoviesBetweenYears_returns_empty_list_if_no_movies_are_between_specified_years() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2003, 2007);
@@ -390,24 +285,12 @@ HomeController homeController = new HomeController();
 
     @Test
     void  getMoviesBetweenYears_returns_one_movie_if_movie_is_between_specified_years() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2003, 2009);
         List<Movie> expectedMovies = new ArrayList<>();
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
@@ -415,26 +298,14 @@ HomeController homeController = new HomeController();
 
     @Test
     void  getMoviesBetweenYears_returns_multiple_movies_if_movies_are_between_specified_years() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 1900, 2009);
         List<Movie> expectedMovies = new ArrayList<>();
 
-        expectedMovies.add(movie2);
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(1));
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
@@ -442,26 +313,14 @@ HomeController homeController = new HomeController();
 
     @Test
     void  getMoviesBetweenYears_swaps_years_if_start_year_greater_than_end_year() {
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2009, 1900);
         List<Movie> expectedMovies = new ArrayList<>();
 
-        expectedMovies.add(movie2);
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(1));
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
@@ -469,25 +328,13 @@ HomeController homeController = new HomeController();
 
     @Test
     void getMoviesBetweenYears_returns_movie_if_year_matches_end_year_exactly(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2000, 2008);
         List<Movie> expectedMovies = new ArrayList<>();
 
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
@@ -495,25 +342,13 @@ HomeController homeController = new HomeController();
 
     @Test
     void getMoviesBetweenYears_returns_movie_if_year_matches_start_year_exactly(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2008, 2009);
         List<Movie> expectedMovies = new ArrayList<>();
 
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
@@ -521,25 +356,13 @@ HomeController homeController = new HomeController();
 
     @Test
     void getMoviesBetweenYears_returns_movie_if_year_matches_start_year_and_end_year_exactly(){
-        // Given
-        List<Movie> movies = new ArrayList<>();
-        Movie movie1 = new Movie("1", "The Boy and the Heron", Collections.singletonList("Animation, Adventure, Drama"), 2023,"In the wake of his mother's death and his father's remarriage, a headstrong boy named Mahito ventures into a dreamlike world shared by both the living and the dead.","https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg", 124, Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Hayao Miyazaki"), Collections.singletonList("Soma Santoki, Masaki Suda, Kô Shibasaki"),7.6);
-        Movie movie2 = new Movie("2", "The Shawshank Redemption", Collections.singletonList("Drama"), 1994, "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "example.com/shawshank_redemption", 142, Collections.singletonList("Frank Darabont"), Collections.singletonList("Stephen King (short story 'Rita Hayworth and Shawshank Redemption'), Frank Darabont (screenplay)"), Collections.singletonList("Tim Robbins, Morgan Freeman"), 9.3);
-        Movie movie3 = new Movie("3", "Inception", Arrays.asList("Action", "Adventure", "Sci-Fi"), 2010, "A thief who enters the dreams of others to steal their secrets must plant an idea into a CEO's mind.", "example.com/inception", 148, Collections.singletonList("Christopher Nolan"), Collections.singletonList("Christopher Nolan"), Arrays.asList("Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"), 8.8);
-        Movie movie4 = new Movie("4", "The Dark Knight", Arrays.asList("Action", "Crime", "Drama"), 2008, "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "example.com/dark_knight", 152, Collections.singletonList("Christopher Nolan"), Arrays.asList("Jonathan Nolan", "Christopher Nolan"), Arrays.asList("Christian Bale", "Heath Ledger", "Aaron Eckhart"), 9.0);
-        Movie movie5 = new Movie("5", "The Revenant", Arrays.asList("Adventure", "Drama", "Thriller"), 2015, "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", "example.com/the_revenant", 156, Collections.singletonList("Alejandro González Iñárritu"), Collections.singletonList("Mark L. Smith (screenplay), Alejandro González Iñárritu (screenplay)"), Arrays.asList("Leonardo DiCaprio", "Tom Hardy", "Will Poulter"), 8.0);
-
-        movies.add(movie1);
-        movies.add(movie2);
-        movies.add(movie3);
-        movies.add(movie4);
-        movies.add(movie5);
+        // Given initialized in movieList
 
         // When
         List<Movie> filteredMovies = homeController.getMoviesBetweenYears(movies, 2008, 2008);
         List<Movie> expectedMovies = new ArrayList<>();
 
-        expectedMovies.add(movie4);
+        expectedMovies.add(movies.get(3));
 
         // Then
         assertEquals(expectedMovies, filteredMovies);
