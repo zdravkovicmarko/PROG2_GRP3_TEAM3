@@ -39,6 +39,8 @@ public class MovieAPI {
             urlBuilder.addQueryParameter("ratingFrom", String.valueOf(ratingFrom));
         }
 
+        System.out.println("\n\n" + urlBuilder + "\n");
+
         // Build request
         Request request = new Request.Builder()
                 .url(urlBuilder.toString())
@@ -116,7 +118,7 @@ public class MovieAPI {
             stringBuilder.append("Rating: ").append(movie.getRating()).append("\n");
             stringBuilder.append("\n");
         }
-        System.out.println();
+        System.out.println(stringBuilder);
 
         return movies;
     }
