@@ -13,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.control.Button;
+import javafx.scene.text.TextAlignment;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
@@ -21,8 +23,9 @@ public class MovieCell extends ListCell<Movie> {
     private final Label releaseYear = new Label();
     private final Label rating = new Label();
     private final ImageView imageView = new ImageView();
+    private final Button watchlistButton = new Button("Add to Watchlist");
     private final HBox releaseRatingBox = new HBox(releaseYear, rating);
-    private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres);
+    private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
     private final HBox layout = new HBox(imageView, textContainer);
     private final Font titleFont = Font.font("Hiragino Sans W5", 20);
     private final Font descriptionFont = Font.font("Hiragino Sans W3", 12);
@@ -60,6 +63,11 @@ public class MovieCell extends ListCell<Movie> {
             description.getStyleClass().add("text-light-gray");
             genres.getStyleClass().add("text-light-purple");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
+            watchlistButton.getStyleClass().add("watchlist-button");
+            watchlistButton.getStyleClass().addAll("text-white");
+            watchlistButton.getStyleClass().addAll("background-purple");
+            watchlistButton.setFont(genreFont);
+            watchlistButton.setTextAlignment(TextAlignment.CENTER);
 
             // Configure layout
             imageView.setFitWidth(100);

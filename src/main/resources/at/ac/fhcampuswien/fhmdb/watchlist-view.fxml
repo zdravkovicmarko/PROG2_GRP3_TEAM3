@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
+    <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
+        <padding>
+            <Insets bottom="7.0" left="10.0" top="7.0" />
+        </padding>
+        <children>
+            <HBox minHeight="70.0" minWidth="1100.0" prefHeight="50.0" prefWidth="1100.0" spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
+                <children>
+                    <ImageView fitHeight="38.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@logo.png" />
+                        </image>
+                    </ImageView>
+                    <JFXButton fx:id="homeBtn" alignment="CENTER" minHeight="25.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" styleClass="background-purple" stylesheets="@styles.css" text="To Home" textAlignment="CENTER" translateX="10.0" translateY="5.0">
+                        <style>
+                            -fx-text-fill: white;
+                        </style>
+                        <font>
+                            <Font name="Hiragino Sans W3" size="13.0" />
+                        </font>
+                    </JFXButton>
+                </children>
+                <padding>
+                    <Insets bottom="20.0" left="10.0" top="20.0" />
+                </padding>
+            </HBox>
+        </children>
+    </HBox>
+    <JFXListView fx:id="watchListView" minHeight="500.0" minWidth="1100.0" prefHeight="500.0" prefWidth="1100.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+</VBox>

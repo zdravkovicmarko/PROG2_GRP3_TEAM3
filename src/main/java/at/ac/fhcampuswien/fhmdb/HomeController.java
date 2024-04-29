@@ -8,8 +8,13 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -20,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
     @FXML
@@ -36,6 +42,8 @@ public class HomeController implements Initializable {
     public TextField searchField;
     @FXML
     public JFXButton sortBtn;
+    @FXML
+    private JFXButton watchlistBtn;
     public static MovieAPI movieAPI = new MovieAPI();
     public static List<Movie> allMovies;
 
@@ -141,6 +149,16 @@ public class HomeController implements Initializable {
             sortAlphabetically(false, observableMovies);
             sortBtn.setText("Sort (asc)");
         }
+    }
+
+    public void switchToWatchlistScene(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("watchlist-view.fxml"));
+        Parent watchlistRoot = loader.load();
+        Scene watchlistScene = new Scene(watchlistRoot);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(watchlistScene);
+        stage.show();
     }
 
     public String getMostPopularActor(List<Movie> movies) {
