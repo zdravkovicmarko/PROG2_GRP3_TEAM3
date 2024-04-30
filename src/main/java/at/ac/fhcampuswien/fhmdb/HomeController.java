@@ -118,7 +118,14 @@ public class HomeController implements Initializable {
 
         // Fetch movies based on search parameters
         try {
-            List<Movie> matchingMovies = movieAPI.fetchMovies(searchQuery, genre, releaseYearValue, ratingValue);
+            List<Movie> matchingMovies;
+
+            // Is genre "ALL"?
+            if ("ALL".equals(genre)) {
+                matchingMovies = movieAPI.fetchMovies(searchQuery, null, releaseYearValue, ratingValue);
+            } else {
+                matchingMovies = movieAPI.fetchMovies(searchQuery, genre, releaseYearValue, ratingValue);
+            }
 
             // Update UI with matching movies
             if (matchingMovies.isEmpty()) {
