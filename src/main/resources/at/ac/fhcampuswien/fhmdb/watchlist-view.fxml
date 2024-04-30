@@ -19,13 +19,7 @@
                             <Image url="@logo.png" />
                         </image>
                     </ImageView>
-                    <JFXButton fx:id="homeBtn" alignment="CENTER" minHeight="25.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" styleClass="background-purple" stylesheets="@styles.css" text="To Home" textAlignment="CENTER" translateX="10.0" translateY="5.0">
-                        <style>
-                            -fx-text-fill: white;
-                        </style>
-                        <font>
-                            <Font name="Hiragino Sans W3" size="13.0" />
-                        </font>
+                    <JFXButton fx:id="homeBtn" alignment="CENTER" minHeight="25.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" styleClass="button" stylesheets="@styles.css" text="Home" textAlignment="CENTER" translateX="10.0" translateY="5.0">
                     </JFXButton>
                 </children>
                 <padding>

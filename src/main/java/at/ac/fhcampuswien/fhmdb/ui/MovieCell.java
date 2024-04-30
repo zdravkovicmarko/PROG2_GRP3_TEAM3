@@ -23,13 +23,10 @@ public class MovieCell extends ListCell<Movie> {
     private final Label releaseYear = new Label();
     private final Label rating = new Label();
     private final ImageView imageView = new ImageView();
-    private final Button watchlistButton = new Button("Add to Watchlist");
+    private final Button watchlistButton = new Button("To Watchlist");
     private final HBox releaseRatingBox = new HBox(releaseYear, rating);
     private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
     private final HBox layout = new HBox(imageView, textContainer);
-    private final Font titleFont = Font.font("Hiragino Sans W5", 20);
-    private final Font descriptionFont = Font.font("Hiragino Sans W3", 12);
-    private final Font genreFont = Font.font("Hiragino Sans W2", 12);
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -51,23 +48,21 @@ public class MovieCell extends ListCell<Movie> {
             description.setText(movie.getDescription() != null ? movie.getDescription() : "N/A");
             genres.setText(movie.getGenres() != null ? String.join(", ", movie.getGenres()) : "N/A");
 
-            // Set fonts, color scheme & background
-            title.setFont(titleFont);
-            releaseYear.setFont(descriptionFont);
-            rating.setFont(descriptionFont);
-            description.setFont(descriptionFont);
-            genres.setFont(genreFont);
+            // Set background, color scheme & fonts
+            layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
+            watchlistButton.getStyleClass().add("watchlist-button");
+            watchlistButton.getStyleClass().addAll("button");
             title.getStyleClass().add("text-white");
             releaseYear.getStyleClass().add("text-light-gray");
             rating.getStyleClass().add("text-light-gray");
             description.getStyleClass().add("text-light-gray");
             genres.getStyleClass().add("text-light-purple");
-            layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
-            watchlistButton.getStyleClass().add("watchlist-button");
-            watchlistButton.getStyleClass().addAll("text-white");
-            watchlistButton.getStyleClass().addAll("background-purple");
-            watchlistButton.setFont(genreFont);
-            watchlistButton.setTextAlignment(TextAlignment.CENTER);
+            title.setFont(Font.font(22));
+            releaseYear.setFont(Font.font(13));
+            rating.setFont(Font.font(13));
+            description.setFont(Font.font(13));
+            genres.setFont(Font.font(13));
+            watchlistButton.setFont(Font.font(13));
 
             // Configure layout
             imageView.setFitWidth(100);
@@ -78,6 +73,8 @@ public class MovieCell extends ListCell<Movie> {
             layout.setPadding(new Insets(10));
             layout.setSpacing(10);
             layout.setAlignment(Pos.CENTER_LEFT);
+            watchlistButton.setAlignment(Pos.CENTER);
+            watchlistButton.setTextAlignment(TextAlignment.CENTER);
 
             // Set graphic to display layout
             setGraphic(layout);

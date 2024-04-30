@@ -1,3 +1,6 @@
+.background-white {
+    -fx-background-color: #ffffff;
+}
 
 .background-purple {
     -fx-background-color: #611fb7;
@@ -17,6 +20,10 @@
 
 .text-light-purple {
     -fx-text-fill: #a489d4;
+}
+
+.text-purple {
+    -fx-text-fill: #611fb7;
 }
 
 .text-light-gray {
@@ -42,9 +49,21 @@
     -fx-padding: 2;
 }
 
+.search-field {
+    -fx-background-color: white;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13.5;
+}
+
 .filter-combo-box {
     -fx-background-color: white;
     -fx-text-fill: #ffffff;
-    -fx-font-family: "Hiragino Sans W2";
-    -fx-font-size: 11.5;
+    -fx-font-size: 12;
+    -fx-padding: 0 0 0 5;
+}
+
+.button {
+    -fx-background-color: #611fb7;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13.5;
 }

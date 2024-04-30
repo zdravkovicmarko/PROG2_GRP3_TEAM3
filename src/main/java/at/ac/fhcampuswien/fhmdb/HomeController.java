@@ -71,11 +71,13 @@ public class HomeController implements Initializable {
                 "MYSTERY", "ROMANCE", "SCIENCE_FICTION", "SPORT", "THRILLER", "WAR", "WESTERN"};
 
         List<String> releaseYears = new ArrayList<>();
+        releaseYears.add("ALL");
         for (int year = 2025; year >= 1895; year--) {
             releaseYears.add(String.valueOf(year));
         }
 
         List<String> ratings = new ArrayList<>();
+        ratings.add("ALL");
         for (double rating = 10.0; rating >= 0.0; rating -= 0.5) {
             ratings.add(String.format(Locale.ENGLISH, "%.1f", rating));
         }
