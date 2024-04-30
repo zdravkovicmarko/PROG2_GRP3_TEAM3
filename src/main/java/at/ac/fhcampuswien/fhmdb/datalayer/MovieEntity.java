@@ -8,7 +8,7 @@ import java.util.List;
 
 @DatabaseTable (tableName = "movie")
 public class MovieEntity {
-    @DatabaseField (generatedId = true)
+    @DatabaseField ()
     private long id;
 
     @DatabaseField()
@@ -40,7 +40,8 @@ public class MovieEntity {
     public MovieEntity() {
     }
 
-    public MovieEntity(String apiId, String title, String description, String genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
+    public MovieEntity(int id, String apiId, String title, String description, String genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
+        this.id = id;
         this.apiId = apiId;
         this.title = title;
         this.description = description;
@@ -49,6 +50,38 @@ public class MovieEntity {
         this.imgUrl = imgUrl;
         this.lengthInMinutes = lengthInMinutes;
         this.rating = rating;
+    }
+
+    public String getApiId() {
+        return apiId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public int getLengthInMinutes() {
+        return lengthInMinutes;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     // TO DO
