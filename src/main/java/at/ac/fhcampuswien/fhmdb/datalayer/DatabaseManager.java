@@ -8,7 +8,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
@@ -26,10 +26,8 @@ public class DatabaseManager {
         try {
             createConnectionSource();
             movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
-            if (movieDao != null) {
-                clearTables();
-            }
             createTables();
+            clearTables();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.List;
 
-@DatabaseTable (tableName = "movie")
+@DatabaseTable (tableName = "MOVIE")
 public class MovieEntity {
     @DatabaseField ()
     private long id;
