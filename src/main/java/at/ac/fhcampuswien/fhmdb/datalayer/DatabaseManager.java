@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class DatabaseManager {
-    public static final String DB_URL = "jdbc:h2:file:./db/moviedb";
+    public static final String DB_URL = "jdbc:h2:file:./db/moviedb;DATABASE_TO_UPPER=false";
     public static final String username = "user";
     public static final String password = "pass";
     private static ConnectionSource connectionSource;
@@ -26,7 +26,9 @@ public class DatabaseManager {
         try {
             createConnectionSource();
             movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
-            clearTables();
+            if (movieDao != null) {
+                clearTables();
+            }
             createTables();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
