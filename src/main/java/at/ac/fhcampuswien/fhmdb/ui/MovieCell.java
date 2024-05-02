@@ -34,10 +34,16 @@ public class MovieCell extends ListCell<Movie> {
     private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
     private final HBox layout = new HBox(imageView, textContainer);
 
-    WatchlistRepository watchlistRepository = new WatchlistRepository();
-
-    public MovieCell() throws SQLException {
+    WatchlistRepository watchlistRepository;
+    {
+        try {
+            watchlistRepository = new WatchlistRepository();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    public MovieCell() {}
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
