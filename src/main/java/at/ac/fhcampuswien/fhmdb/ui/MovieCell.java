@@ -1,5 +1,8 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
+import at.ac.fhcampuswien.fhmdb.datalayer.MovieEntity;
+import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistMovieEntity;
+import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +19,9 @@ import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label description = new Label();
@@ -27,6 +33,8 @@ public class MovieCell extends ListCell<Movie> {
     private final HBox releaseRatingBox = new HBox(releaseYear, rating);
     private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
     private final HBox layout = new HBox(imageView, textContainer);
+
+    WatchlistRepository watchlistRepository = new WatchlistRepository();
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -78,6 +86,27 @@ public class MovieCell extends ListCell<Movie> {
 
             // Set graphic to display layout
             setGraphic(layout);
+
+            // Watchlist button's event handler
+            watchlistButton.setOnMouseReleased(mouseEvent -> {
+                try {
+                    Movie watchListMovie = getItem();
+                    List<String> genreList = watchListMovie.getGenres();
+                    WatchlistMovieEntity watchlistMovie = new WatchlistMovieEntity(
+                            watchListMovie.getId(),
+                            watchListMovie.getTitle(),
+                            watchListMovie.getDescription(),
+                            MovieEntity.genresToString(genreList),
+                            watchListMovie.getReleaseYear(),
+                            watchListMovie.getImgUrl(),
+                            watchListMovie.getLengthInMinutes(),
+                            watchListMovie.getRating()
+                    );
+                    watchlistRepository.addToWatchlist(watchlistMovie);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 }

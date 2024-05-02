@@ -17,8 +17,8 @@ public class DatabaseManager {
     public static final String DB_URL = "jdbc:h2:file:./db/moviedb;DATABASE_TO_UPPER=false";
     public static final String username = "user";
     public static final String password = "pass";
-    private static ConnectionSource connectionSource;
-    Dao<MovieEntity, Long> movieDao;
+    static ConnectionSource connectionSource;
+    private Dao<MovieEntity, Long> movieDao;
     Dao<WatchlistMovieEntity, Long> watchlistDao;
     private static DatabaseManager instance;
 
@@ -27,7 +27,7 @@ public class DatabaseManager {
             createConnectionSource();
             movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
             createTables();
-            clearTables();
+            MovieRepository.removeAll();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -47,40 +47,9 @@ public class DatabaseManager {
     private static void createTables() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, MovieEntity.class);
     }
-    private static void clearTables() throws SQLException {
-        TableUtils.clearTable(connectionSource, MovieEntity.class);
-    }
 
-    public void testDB() throws SQLException {
-        int databaseID = 1;
-        if (HomeController.allMovies != null) {
-            for (Movie movie : HomeController.allMovies) {
-                List<String> genreList = movie.getGenres();
-                StringJoiner stringJoiner = new StringJoiner(", ");
-                for (String str : genreList) {
-                    stringJoiner.add(str);
-                }
-                String genreAsString = stringJoiner.toString();
-
-                MovieEntity movieEntity = new MovieEntity(
-                        databaseID,
-                        movie.getId(),
-                        movie.getTitle(),
-                        movie.getDescription(),
-                        genreAsString,
-                        movie.getReleaseYear(),
-                        movie.getImgUrl(),
-                        movie.getLengthInMinutes(),
-                        movie.getRating()
-                );
-                movieDao.create(movieEntity);
-                databaseID++;
-            }
-        }
-    }
-    // TO DO
     public Dao<MovieEntity, Long> getMovieDao() {
-        return movieDao;
+        return this.movieDao;
     }
 
     public Dao<WatchlistMovieEntity, Long> getWatchlistDao() {

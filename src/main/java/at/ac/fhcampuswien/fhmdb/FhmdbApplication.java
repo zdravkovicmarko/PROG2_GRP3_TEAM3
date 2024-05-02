@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.datalayer.DatabaseManager;
+import at.ac.fhcampuswien.fhmdb.datalayer.MovieRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +22,8 @@ public class FhmdbApplication extends Application {
         stage.show();
 
         try {
-            DatabaseManager.getDatabaseManager().testDB();
+            MovieRepository movieRepository = new MovieRepository();
+            movieRepository.addAllMovies(HomeController.allMovies);
         } catch (SQLException e) {
             e.printStackTrace();
         }

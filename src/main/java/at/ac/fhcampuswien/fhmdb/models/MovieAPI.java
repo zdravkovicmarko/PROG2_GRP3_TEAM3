@@ -106,6 +106,7 @@ public class MovieAPI {
         // Print out all movie objects for debugging
         StringBuilder stringBuilder = new StringBuilder();
         for (Movie movie : movies) {
+            stringBuilder.append("id: ").append(movie.getId()).append("\n");
             stringBuilder.append("Title: ").append(movie.getTitle()).append("\n");
             stringBuilder.append("Description: ").append(movie.getDescription()).append("\n");
             stringBuilder.append("Genres: ").append(movie.getGenres()).append("\n");
