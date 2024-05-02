@@ -14,28 +14,28 @@ public class MovieEntity {
     @DatabaseField (generatedId = true)
     private long id;
 
-    @DatabaseField(columnName = "APIID")
+    @DatabaseField()
     private String apiId;
 
-    @DatabaseField(columnName = "TITLE")
+    @DatabaseField()
     private String title;
 
-    @DatabaseField(columnName = "DESCRIPTION")
+    @DatabaseField()
     private String description;
 
-    @DatabaseField(columnName = "GENRES")
+    @DatabaseField()
     private String genres;
 
-    @DatabaseField(columnName = "RELEASEYEAR")
+    @DatabaseField()
     private int releaseYear;
 
-    @DatabaseField(columnName = "IMGURL")
+    @DatabaseField()
     private String imgUrl;
 
-    @DatabaseField(columnName = "LENGTHINMINUTES")
+    @DatabaseField()
     private int lengthInMinutes;
 
-    @DatabaseField(columnName = "RATING")
+    @DatabaseField()
     private double rating;
 
 

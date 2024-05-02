@@ -33,14 +33,14 @@ public class DatabaseManager {
         }
     }
 
-    public static DatabaseManager getDatabaseManager () throws SQLException {
+    public static DatabaseManager getDatabaseManager() throws SQLException {
         if (instance == null) {
             instance = new DatabaseManager();
         }
         return instance;
     }
 
-    private static void createConnectionSource () throws SQLException {
+    private static void createConnectionSource() throws SQLException {
         connectionSource = new JdbcConnectionSource(DB_URL, username, password);
     }
 
