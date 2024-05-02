@@ -19,13 +19,17 @@ public class WatchlistRepository  {
     }
 
     public int addToWatchlist(WatchlistMovieEntity movie) throws SQLException {
-        dao.create(movie);
-        return 0;
+        List<WatchlistMovieEntity> existingMovies = dao.queryForEq("apiId", movie.getApiId());
+
+        if (existingMovies.isEmpty()) { // Movie with same apiId in watchlist?
+            dao.create(movie);          // No, add movie
+            return 0;
+        }
+        return 0;                       // Yes, don't add duplicate
     }
 
     public int removeFromWatchlist(String apiId) throws SQLException {
-        return dao.delete((WatchlistMovieEntity) dao.queryBuilder().where().eq("apiId", apiId).prepare());
+        dao.delete((WatchlistMovieEntity) dao.queryBuilder().where().eq("apiId", apiId).prepare());
+        return 0;
     }
-
-
 }
