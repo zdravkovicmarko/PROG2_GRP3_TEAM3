@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import at.ac.fhcampuswien.fhmdb.MovieAPIException;
+import javafx.scene.control.Label;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +24,7 @@ public class MovieAPI {
     }
 
     // Method to fetch movies from API
-    public List<Movie> fetchMovies(String query, String genre, int releaseYear, double ratingFrom) throws IOException {
+    public List<Movie> fetchMovies(String query, String genre, int releaseYear, double ratingFrom) throws MovieAPIException {
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(BASE_URL)).newBuilder();
 
         // Add query parameters to URL builder
@@ -53,6 +55,9 @@ public class MovieAPI {
 
             String responseData = response.body().string();
             return parseMovies(responseData);
+        } catch (IOException e) {
+            System.out.println("error " + e.getMessage());
+            throw new MovieAPIException(e); // Propagate the IOException as MovieAPIException
         }
     }
 
