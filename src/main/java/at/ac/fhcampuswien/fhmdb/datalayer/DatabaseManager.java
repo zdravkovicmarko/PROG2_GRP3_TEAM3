@@ -26,6 +26,7 @@ public class DatabaseManager {
         try {
             createConnectionSource();
             movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
+            watchlistDao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
             createTables();
             MovieRepository.removeAll();
         } catch (SQLException e) {
@@ -46,6 +47,7 @@ public class DatabaseManager {
 
     private static void createTables() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, MovieEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
     }
 
     public Dao<MovieEntity, Long> getMovieDao() {
@@ -53,6 +55,6 @@ public class DatabaseManager {
     }
 
     public Dao<WatchlistMovieEntity, Long> getWatchlistDao() {
-        return watchlistDao;
+        return this.watchlistDao;
     }
 }
