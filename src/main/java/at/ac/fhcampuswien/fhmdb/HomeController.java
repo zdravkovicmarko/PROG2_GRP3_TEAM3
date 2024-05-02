@@ -55,7 +55,7 @@ public class HomeController implements Initializable {
     static {
         try {
             allMovies = movieAPI.fetchMovies(null,null,0,0);
-        } catch (IOException e) {
+        } catch (MovieAPIException e) {
             throw new RuntimeException(e);
         }
     }
@@ -120,6 +120,7 @@ public class HomeController implements Initializable {
         String genre = (String) genreComboBox.getSelectionModel().getSelectedItem();
         String releaseYear = (String) releaseYearComboBox.getSelectionModel().getSelectedItem();
         String rating = (String) ratingComboBox.getSelectionModel().getSelectedItem();
+        Label exceptionLabel = new Label();
 
         int releaseYearValue = 0;
         if (releaseYear != null && !releaseYear.isEmpty() && !releaseYear.equals("ALL")) {
@@ -129,30 +130,31 @@ public class HomeController implements Initializable {
         if (rating != null && !rating.isEmpty() && !rating.equals("ALL")) {
             ratingValue = Double.parseDouble(rating);
         }
+        List<Movie> matchingMovies = new ArrayList<>();
 
         // Fetch movies based on search parameters
+        // Is genre "ALL"?
         try {
-            List<Movie> matchingMovies;
-
-            // Is genre "ALL"?
             if ("ALL".equals(genre)) {
                 matchingMovies = movieAPI.fetchMovies(searchQuery, null, releaseYearValue, ratingValue);
             } else {
                 matchingMovies = movieAPI.fetchMovies(searchQuery, genre, releaseYearValue, ratingValue);
             }
+        } catch (MovieAPIException e) {
+            exceptionHandler(exceptionLabel);
+        }
 
-            // Update UI with matching movies
-            if (matchingMovies.isEmpty()) {
+        // Update UI with matching movies
+        if (matchingMovies.isEmpty()) {
+            if (movieListView.getPlaceholder() != exceptionLabel) {
                 Label label = new Label("No results found");
                 movieListView.setPlaceholder(label);
-                observableMovies.clear(); // Clear any existing movie data
-            } else {
-                observableMovies = FXCollections.observableArrayList(matchingMovies);
-                movieListView.setItems(observableMovies);
-                movieListView.setCellFactory(movieListView -> new MovieCell(AddToWatchlistClicked, null));
             }
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle or log the exception accordingly
+            observableMovies.clear(); // Clear any existing movie data
+        } else {
+            observableMovies = FXCollections.observableArrayList(matchingMovies);
+            movieListView.setItems(observableMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell());
         }
     }
 
@@ -238,5 +240,12 @@ public class HomeController implements Initializable {
                     .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
                     .collect(Collectors.toList());
         }
+    }
+    public void exceptionHandler(Label exceptionLabel){
+        exceptionLabel.setText("Make sure you have a stable internet connection");
+        movieListView.setPlaceholder(exceptionLabel);
+        System.out.println("HIHI");
+        observableMovies.clear();
+
     }
 }
