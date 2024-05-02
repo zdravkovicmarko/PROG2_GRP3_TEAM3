@@ -1,9 +1,9 @@
-package at.ac.fhcampuswien.fhmdb.datalayer;
+package at.ac.fhcampuswien.fhmdb.data;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WatchlistRepository  {
@@ -29,7 +29,9 @@ public class WatchlistRepository  {
     }
 
     public int removeFromWatchlist(String apiId) throws SQLException {
-        dao.delete((WatchlistMovieEntity) dao.queryBuilder().where().eq("apiId", apiId).prepare());
-        return 0;
+        DeleteBuilder<WatchlistMovieEntity, Long> deleteBuilder = dao.deleteBuilder();
+        deleteBuilder.where().eq("apiId", apiId);
+        int rowsDeleted = deleteBuilder.delete();
+        return rowsDeleted;
     }
 }

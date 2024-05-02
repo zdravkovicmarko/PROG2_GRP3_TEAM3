@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb.models;
+package at.ac.fhcampuswien.fhmdb.data;
 
 import at.ac.fhcampuswien.fhmdb.MovieAPIException;
 import javafx.scene.control.Label;

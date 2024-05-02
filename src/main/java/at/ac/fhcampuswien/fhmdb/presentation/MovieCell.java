@@ -1,9 +1,10 @@
-package at.ac.fhcampuswien.fhmdb.ui;
+package at.ac.fhcampuswien.fhmdb.presentation;
 
-import at.ac.fhcampuswien.fhmdb.datalayer.MovieEntity;
-import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistMovieEntity;
-import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistRepository;
-import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.AddToWatchlistEventHandler;
+import at.ac.fhcampuswien.fhmdb.HomeController;
+import at.ac.fhcampuswien.fhmdb.RemoveFromWatchlistEventHandler;
+import at.ac.fhcampuswien.fhmdb.data.WatchlistRepository;
+import at.ac.fhcampuswien.fhmdb.data.Movie;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -20,7 +21,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
@@ -43,7 +43,13 @@ public class MovieCell extends ListCell<Movie> {
         }
     }
 
-    public MovieCell() {}
+    private AddToWatchlistEventHandler<Movie> addToWatchlistClicked;
+    private RemoveFromWatchlistEventHandler<Movie> removeFromWatchlistClicked;
+
+    public MovieCell(AddToWatchlistEventHandler<Movie> addToWatchlistClicked, RemoveFromWatchlistEventHandler<Movie> removeFromWatchlistClicked) {
+        this.addToWatchlistClicked = addToWatchlistClicked;
+        this.removeFromWatchlistClicked = removeFromWatchlistClicked;
+    }
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -64,6 +70,11 @@ public class MovieCell extends ListCell<Movie> {
             rating.setText("Rating: " + movie.getRating());
             description.setText(movie.getDescription() != null ? movie.getDescription() : "N/A");
             genres.setText(movie.getGenres() != null ? String.join(", ", movie.getGenres()) : "N/A");
+            if (HomeController.isInHome) {
+                watchlistButton.setText("To Watchlist");
+            } else {
+                watchlistButton.setText("Remove");
+            }
 
             // Set background, color scheme & fonts
             layout.setBackground(new Background(new BackgroundFill(Color.web("#262626"), null, null)));
@@ -98,22 +109,10 @@ public class MovieCell extends ListCell<Movie> {
 
             // Watchlist button's event handler
             watchlistButton.setOnMouseReleased(mouseEvent -> {
-                try {
-                    Movie watchListMovie = getItem();
-                    List<String> genreList = watchListMovie.getGenres();
-                    WatchlistMovieEntity watchlistMovie = new WatchlistMovieEntity(
-                            watchListMovie.getId(),
-                            watchListMovie.getTitle(),
-                            watchListMovie.getDescription(),
-                            MovieEntity.genresToString(genreList),
-                            watchListMovie.getReleaseYear(),
-                            watchListMovie.getImgUrl(),
-                            watchListMovie.getLengthInMinutes(),
-                            watchListMovie.getRating()
-                    );
-                    watchlistRepository.addToWatchlist(watchlistMovie);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                if (watchlistButton.getText().equals("To Watchlist")) {
+                    addToWatchlistClicked.addOnClick(movie);
+                } else {
+                    removeFromWatchlistClicked.removeOnClick(movie);
                 }
             });
         }

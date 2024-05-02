@@ -1,8 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import at.ac.fhcampuswien.fhmdb.datalayer.DatabaseManager;
-import at.ac.fhcampuswien.fhmdb.datalayer.MovieRepository;
-import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistRepository;
+import at.ac.fhcampuswien.fhmdb.data.MovieRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +14,7 @@ public class FhmdbApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
+        Scene scene = new Scene(fxmlLoader.load(), 1111, 600);
         scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("styles.css")).toExternalForm());
         stage.setTitle("ZINEMATIC");
         stage.setScene(scene);

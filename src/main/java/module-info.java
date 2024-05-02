@@ -8,10 +8,8 @@ module at.ac.fhcampuswien.fhmdb {
     requires org.json;
     requires java.sql;
 
-    opens at.ac.fhcampuswien.fhmdb.datalayer to ormlite.jdbc;
     opens at.ac.fhcampuswien.fhmdb to javafx.fxml;
     exports at.ac.fhcampuswien.fhmdb;
-    exports at.ac.fhcampuswien.fhmdb.models;
-    opens at.ac.fhcampuswien.fhmdb.models to javafx.fxml;
-    exports at.ac.fhcampuswien.fhmdb.datalayer;
+    exports at.ac.fhcampuswien.fhmdb.data;
+    opens at.ac.fhcampuswien.fhmdb.data to javafx.fxml, ormlite.jdbc;
 }
