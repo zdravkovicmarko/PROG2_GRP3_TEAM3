@@ -1,7 +1,5 @@
-package at.ac.fhcampuswien.fhmdb.datalayer;
+package at.ac.fhcampuswien.fhmdb.data;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -134,7 +132,7 @@ public class MovieEntity {
     }
 
 
-    public List<Movie> toMovies (List<MovieEntity> movieEntities) {
+    public static List<Movie> toMovies(List<? extends MovieEntity> movieEntities) {
         List<Movie> movies = new ArrayList<>();
 
         for (MovieEntity movieEntity : movieEntities) {

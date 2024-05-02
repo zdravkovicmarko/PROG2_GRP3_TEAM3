@@ -1,7 +1,5 @@
-package at.ac.fhcampuswien.fhmdb.datalayer;
+package at.ac.fhcampuswien.fhmdb.data;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 
@@ -9,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static at.ac.fhcampuswien.fhmdb.datalayer.DatabaseManager.connectionSource;
+import static at.ac.fhcampuswien.fhmdb.data.DatabaseManager.connectionSource;
 
 public class MovieRepository {
 

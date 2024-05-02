@@ -1,8 +1,11 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.models.MovieAPI;
-import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
+import at.ac.fhcampuswien.fhmdb.data.MovieEntity;
+import at.ac.fhcampuswien.fhmdb.data.WatchlistMovieEntity;
+import at.ac.fhcampuswien.fhmdb.data.WatchlistRepository;
+import at.ac.fhcampuswien.fhmdb.data.Movie;
+import at.ac.fhcampuswien.fhmdb.data.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.presentation.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -20,6 +23,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -46,6 +50,7 @@ public class HomeController implements Initializable {
     private JFXButton watchlistBtn;
     public static MovieAPI movieAPI = new MovieAPI();
     public static List<Movie> allMovies;
+    public static boolean isInHome = true;
 
     static {
         try {
@@ -60,10 +65,10 @@ public class HomeController implements Initializable {
     // Initialize UI stuff
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        observableMovies.clear(); // Clear the existing data
         observableMovies.addAll(allMovies); // Add dummy data to observable list
         movieListView.setItems(observableMovies); // Set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // Use custom cell factory to display data
+        movieListView.setCellFactory(movieListView -> new MovieCell(AddToWatchlistClicked, null)); // Use custom cell factory to display data
 
         // Populate combo boxes
         String[] genres = {"ALL", "ACTION", "ADVENTURE", "ANIMATION", "BIOGRAPHY", "COMEDY", "CRIME",
@@ -97,6 +102,15 @@ public class HomeController implements Initializable {
 
         // Sort button's event handler
         sortBtn.setOnAction(actionEvent -> eventSortButton());
+
+        // To Watchlist button's event handler
+        watchlistBtn.setOnAction(actionEvent -> {
+            try {
+                switchToWatchlist(actionEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     // Events for filtering
@@ -135,7 +149,7 @@ public class HomeController implements Initializable {
             } else {
                 observableMovies = FXCollections.observableArrayList(matchingMovies);
                 movieListView.setItems(observableMovies);
-                movieListView.setCellFactory(movieListView -> new MovieCell());
+                movieListView.setCellFactory(movieListView -> new MovieCell(AddToWatchlistClicked, null));
             }
         } catch (IOException e) {
             e.printStackTrace(); // Handle or log the exception accordingly
@@ -160,7 +174,8 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void switchToWatchlistScene(ActionEvent event) throws IOException {
+    public void switchToWatchlist(ActionEvent event) throws IOException {
+        isInHome = false;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("watchlist-view.fxml"));
         Parent watchlistRoot = loader.load();
         Scene watchlistScene = new Scene(watchlistRoot);
@@ -169,6 +184,26 @@ public class HomeController implements Initializable {
         stage.setScene(watchlistScene);
         stage.show();
     }
+
+    protected final AddToWatchlistEventHandler<Movie> AddToWatchlistClicked = movie -> {
+        try {
+            WatchlistRepository watchlistRepository = new WatchlistRepository();
+            List<String> genreList = movie.getGenres();
+            WatchlistMovieEntity watchlistMovie = new WatchlistMovieEntity(
+                    movie.getId(),
+                    movie.getTitle(),
+                    movie.getDescription(),
+                    MovieEntity.genresToString(genreList),
+                    movie.getReleaseYear(),
+                    movie.getImgUrl(),
+                    movie.getLengthInMinutes(),
+                    movie.getRating()
+            );
+            watchlistRepository.addToWatchlist(watchlistMovie);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    };
 
     public String getMostPopularActor(List<Movie> movies) {
         return movies.stream() // Convert movie list into movie objects stream

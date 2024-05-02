@@ -1,7 +1,5 @@
-package at.ac.fhcampuswien.fhmdb.datalayer;
+package at.ac.fhcampuswien.fhmdb.data;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -9,9 +7,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringJoiner;
 
 public class DatabaseManager {
     public static final String DB_URL = "jdbc:h2:file:./db/moviedb;DATABASE_TO_UPPER=false";
