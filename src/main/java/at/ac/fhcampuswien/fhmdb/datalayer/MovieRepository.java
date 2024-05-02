@@ -35,8 +35,8 @@ public class MovieRepository {
 
 
     public int addAllMovies(List<Movie> movies) throws SQLException {
-        if (HomeController.allMovies != null) {
-            for (Movie movie : HomeController.allMovies) {
+        if (movies != null) {
+            for (Movie movie : movies) {
                 List<String> genreList = movie.getGenres();
                 StringJoiner stringJoiner = new StringJoiner(", ");
                 for (String str : genreList) {

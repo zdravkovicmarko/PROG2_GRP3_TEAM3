@@ -6,6 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -37,6 +38,8 @@ public class MovieEntity {
 
     @DatabaseField()
     private double rating;
+
+
 
 
     
@@ -130,9 +133,32 @@ public class MovieEntity {
         return null;
     }
 
-    // TODO
+
     public List<Movie> toMovies (List<MovieEntity> movieEntities) {
-        return null;
+        List<Movie> movies = new ArrayList<>();
+
+        for (MovieEntity movieEntity : movieEntities) {
+            String genreAsString = movieEntity.getGenres();
+            List<String> genreList = Arrays.asList(genreAsString.split(", "));
+            List<String> directorsList = new ArrayList<>();
+            List<String> writersList = new ArrayList<>();
+            List<String> mainCastList = new ArrayList<>();
+
+            movies.add(new Movie(
+                    movieEntity.getApiId(),
+                    movieEntity.getTitle(),
+                    genreList,
+                    movieEntity.getReleaseYear(),
+                    movieEntity.getDescription(),
+                    movieEntity.getImgUrl(),
+                    movieEntity.getLengthInMinutes(),
+                    directorsList,
+                    writersList,
+                    mainCastList,
+                    movieEntity.getRating()
+            ));
+        }
+        return movies;
     }
 
 }

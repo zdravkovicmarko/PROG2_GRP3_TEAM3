@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.datalayer.DatabaseManager;
 import at.ac.fhcampuswien.fhmdb.datalayer.MovieRepository;
+import at.ac.fhcampuswien.fhmdb.datalayer.WatchlistRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
