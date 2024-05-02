@@ -36,6 +36,9 @@ public class MovieCell extends ListCell<Movie> {
 
     WatchlistRepository watchlistRepository = new WatchlistRepository();
 
+    public MovieCell() throws SQLException {
+    }
+
     @Override
     protected void updateItem(Movie movie, boolean empty) {
         super.updateItem(movie, empty);

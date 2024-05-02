@@ -19,7 +19,7 @@ public class DatabaseManager {
     public static final String password = "pass";
     static ConnectionSource connectionSource;
     private Dao<MovieEntity, Long> movieDao;
-    Dao<WatchlistMovieEntity, Long> watchlistDao;
+    private Dao<WatchlistMovieEntity, Long> watchlistDao;
     private static DatabaseManager instance;
 
     private DatabaseManager() {

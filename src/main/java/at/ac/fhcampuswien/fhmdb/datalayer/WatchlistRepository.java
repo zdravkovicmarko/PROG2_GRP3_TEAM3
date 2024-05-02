@@ -10,9 +10,12 @@ public class WatchlistRepository  {
 
     Dao<WatchlistMovieEntity, Long> dao;
 
-    // TODO
-    public List<WatchlistMovieEntity> getWatchlist() {
-        return null;
+    public WatchlistRepository() throws SQLException {
+        this.dao = DatabaseManager.getDatabaseManager().getWatchlistDao();
+    }
+
+    public List<WatchlistMovieEntity> getWatchlist() throws SQLException {
+        return dao.queryForAll();
     }
 
     public int addToWatchlist(WatchlistMovieEntity movie) throws SQLException {
