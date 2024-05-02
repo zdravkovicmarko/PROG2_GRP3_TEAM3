@@ -33,7 +33,6 @@ public class MovieRepository {
         return null;
     }
 
-
     public int addAllMovies(List<Movie> movies) throws SQLException {
         if (movies != null) {
             for (Movie movie : movies) {
@@ -58,5 +57,9 @@ public class MovieRepository {
             }
         }
         return 0;
+    }
+
+    public void removeMovie(MovieEntity movieEntity) throws SQLException {
+        dao.delete(movieEntity);
     }
 }
