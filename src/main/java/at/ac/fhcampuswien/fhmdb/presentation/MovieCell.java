@@ -29,7 +29,7 @@ public class MovieCell extends ListCell<Movie> {
     private final Label releaseYear = new Label();
     private final Label rating = new Label();
     private final ImageView imageView = new ImageView();
-    private final Button watchlistButton = new Button("To Watchlist");
+    private final Button watchlistButton = new Button("Add to Watchlist");
     private final HBox releaseRatingBox = new HBox(releaseYear, rating);
     private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
     private final HBox layout = new HBox(imageView, textContainer);
@@ -71,7 +71,7 @@ public class MovieCell extends ListCell<Movie> {
             description.setText(movie.getDescription() != null ? movie.getDescription() : "N/A");
             genres.setText(movie.getGenres() != null ? String.join(", ", movie.getGenres()) : "N/A");
             if (HomeController.isInHome) {
-                watchlistButton.setText("To Watchlist");
+                watchlistButton.setText("Add to Watchlist");
             } else {
                 watchlistButton.setText("Remove");
             }
@@ -109,7 +109,7 @@ public class MovieCell extends ListCell<Movie> {
 
             // Watchlist button's event handler
             watchlistButton.setOnMouseReleased(mouseEvent -> {
-                if (watchlistButton.getText().equals("To Watchlist")) {
+                if (watchlistButton.getText().equals("Add to Watchlist")) {
                     addToWatchlistClicked.addOnClick(movie);
                 } else {
                     removeFromWatchlistClicked.removeOnClick(movie);
