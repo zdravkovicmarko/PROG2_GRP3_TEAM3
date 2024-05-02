@@ -154,7 +154,7 @@ public class HomeController implements Initializable {
         } else {
             observableMovies = FXCollections.observableArrayList(matchingMovies);
             movieListView.setItems(observableMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell());
+            movieListView.setCellFactory(movieListView -> new MovieCell(AddToWatchlistClicked, null));
         }
     }
 
