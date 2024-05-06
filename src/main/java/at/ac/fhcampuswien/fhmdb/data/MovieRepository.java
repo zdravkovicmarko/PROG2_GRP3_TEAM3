@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.data;
 
+import at.ac.fhcampuswien.fhmdb.DatabaseException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 
@@ -13,25 +14,37 @@ public class MovieRepository {
 
     Dao<MovieEntity, Long> dao;
 
-    public MovieRepository() throws SQLException {
+    public MovieRepository() {
         this.dao = DatabaseManager.getDatabaseManager().getMovieDao();
     }
 
-    public List<MovieEntity> getAllMovies() throws SQLException {
+    public List<MovieEntity> getAllMovies() throws DatabaseException {
+        try {
         return dao.queryForAll();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
     }
 
-    public static int removeAll() throws SQLException {
-        TableUtils.clearTable(connectionSource, MovieEntity.class);
-        return 0;
+    public static int removeAll() throws DatabaseException {
+        try {
+            TableUtils.clearTable(connectionSource, MovieEntity.class);
+            return 0;
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
     }
 
-    // TODO
-    public MovieEntity getMovie() {
-        return null;
+    public MovieEntity getMovie(long id) throws DatabaseException {
+        try {
+        return dao.queryForId(id);
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
     }
 
-    public int addAllMovies(List<Movie> movies) throws SQLException {
+    public int addAllMovies(List<Movie> movies) throws DatabaseException {
+        try {
         if (movies != null) {
             for (Movie movie : movies) {
                 List<String> genreList = movie.getGenres();
@@ -55,9 +68,8 @@ public class MovieRepository {
             }
         }
         return 0;
-    }
-
-    public void removeMovie(MovieEntity movieEntity) throws SQLException {
-        dao.delete(movieEntity);
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
     }
 }

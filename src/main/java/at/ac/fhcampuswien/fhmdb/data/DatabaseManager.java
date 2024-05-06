@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.data;
 
+import at.ac.fhcampuswien.fhmdb.DatabaseException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -20,12 +21,20 @@ public class DatabaseManager {
     private DatabaseManager() {
         try {
             createConnectionSource();
-            movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
-            watchlistDao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
+            createDaos();
             createTables();
             MovieRepository.removeAll();
-        } catch (SQLException e) {
+        } catch (DatabaseException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void createDaos() throws DatabaseException {
+        try {
+        movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);
+        watchlistDao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
         }
     }
 
@@ -36,17 +45,25 @@ public class DatabaseManager {
         return instance;
     }
 
-    private static void createConnectionSource() throws SQLException {
+    private static void createConnectionSource() throws DatabaseException {
+        try {
         connectionSource = new JdbcConnectionSource(DB_URL, username, password);
+        } catch (SQLException e) {
+            throw new DatabaseException();
+        }
     }
 
     public static ConnectionSource getConnectionSource() {
         return connectionSource;
     }
 
-    private static void createTables() throws SQLException {
+    private static void createTables() throws DatabaseException {
+        try {
         TableUtils.createTableIfNotExists(connectionSource, MovieEntity.class);
         TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        } catch (SQLException e) {
+            throw new DatabaseException();
+        }
     }
 
     public Dao<MovieEntity, Long> getMovieDao() {

@@ -32,11 +32,7 @@ public class WatchlistController implements Initializable {
 
     private final WatchlistRepository watchlistRepository;
     {
-        try {
-            watchlistRepository = new WatchlistRepository();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        watchlistRepository = new WatchlistRepository();
     }
 
     @Override
@@ -48,20 +44,17 @@ public class WatchlistController implements Initializable {
             observableMovies.setAll(watchlistMovies);                                       // Update observable list
             watchListView.setItems(observableMovies);                                       // Set data to list view
             watchListView.setCellFactory(movieListView -> new MovieCell(null, RemoveFromWatchlistClicked));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (DatabaseException e) {
+            System.out.println("Error getting watchlist data: " + e.getMessage());
         }
         // Sort button's event handler
         homeBtn.setOnAction(actionEvent -> {
-            try {
-                switchToHome(actionEvent);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            switchToHome(actionEvent);
         });
     }
 
-    public void switchToHome(ActionEvent event) throws IOException {
+    public void switchToHome(ActionEvent event) {
+        try {
         HomeController.isInHome = true;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
         Parent watchlistRoot = loader.load();
@@ -70,6 +63,9 @@ public class WatchlistController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(watchlistScene);
         stage.show();
+        } catch (IOException e) {
+            System.out.println("Error switching to home: " + e.getMessage());
+        }
     }
 
     protected final RemoveFromWatchlistEventHandler<Movie> RemoveFromWatchlistClicked = movie -> {
@@ -80,7 +76,7 @@ public class WatchlistController implements Initializable {
             // Update UI reflecting removal
             observableMovies.remove(movie);
             watchListView.setItems(observableMovies);
-        } catch (SQLException e) {
+        } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
     };

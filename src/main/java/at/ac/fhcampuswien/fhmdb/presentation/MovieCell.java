@@ -36,11 +36,7 @@ public class MovieCell extends ListCell<Movie> {
 
     WatchlistRepository watchlistRepository;
     {
-        try {
             watchlistRepository = new WatchlistRepository();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private AddToWatchlistEventHandler<Movie> addToWatchlistClicked;
