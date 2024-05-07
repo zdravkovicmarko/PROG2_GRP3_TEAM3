@@ -29,6 +29,7 @@ public class DatabaseManager {
         }
     }
 
+    // Creates Data Access Objects (DAOs) for movie & watchlist movie entities.
     public void createDaos() throws DatabaseException {
         try {
         movieDao = DaoManager.createDao(connectionSource, MovieEntity.class);

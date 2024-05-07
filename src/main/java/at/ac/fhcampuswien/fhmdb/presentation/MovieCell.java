@@ -3,14 +3,11 @@ package at.ac.fhcampuswien.fhmdb.presentation;
 import at.ac.fhcampuswien.fhmdb.AddToWatchlistEventHandler;
 import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.RemoveFromWatchlistEventHandler;
-import at.ac.fhcampuswien.fhmdb.data.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.data.Movie;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -20,24 +17,16 @@ import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
 
-import java.sql.SQLException;
-
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label description = new Label();
     private final Label genres = new Label();
     private final Label releaseYear = new Label();
     private final Label rating = new Label();
-    private final ImageView imageView = new ImageView();
     private final Button watchlistButton = new Button("Add to Watchlist");
-    private final HBox releaseRatingBox = new HBox(releaseYear, rating);
-    private final VBox textContainer = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
-    private final HBox layout = new HBox(imageView, textContainer);
 
-    WatchlistRepository watchlistRepository;
-    {
-            watchlistRepository = new WatchlistRepository();
-    }
+    private final HBox releaseRatingBox = new HBox(releaseYear, rating);
+    private final VBox layout = new VBox(title, releaseRatingBox, description, genres, watchlistButton);
 
     private AddToWatchlistEventHandler<Movie> addToWatchlistClicked;
     private RemoveFromWatchlistEventHandler<Movie> removeFromWatchlistClicked;
@@ -59,13 +48,11 @@ public class MovieCell extends ListCell<Movie> {
             this.getStyleClass().add("movie-cell");
 
             // Set movie details
-            Image image = new Image(movie.getImgUrl());
-            imageView.setImage(image);
             title.setText(movie.getTitle());
             releaseYear.setText("Release Year: " + movie.getReleaseYear());
             rating.setText("Rating: " + movie.getRating());
             description.setText(movie.getDescription() != null ? movie.getDescription() : "N/A");
-            genres.setText(movie.getGenres() != null ? String.join(", ", movie.getGenres()) : "N/A");
+            genres.setText(movie.getGenres() != null ? String.join(",  ", movie.getGenres()) : "N/A");
             if (HomeController.isInHome) {
                 watchlistButton.setText("Add to Watchlist");
             } else {
@@ -89,11 +76,9 @@ public class MovieCell extends ListCell<Movie> {
             watchlistButton.setFont(Font.font(13));
 
             // Configure layout
-            imageView.setFitWidth(100);
-            imageView.setPreserveRatio(true);
             description.setWrapText(true);
             releaseRatingBox.setSpacing(10);
-            textContainer.setSpacing(10);
+            layout.setSpacing(10);
             layout.setPadding(new Insets(10));
             layout.setSpacing(10);
             layout.setAlignment(Pos.CENTER_LEFT);

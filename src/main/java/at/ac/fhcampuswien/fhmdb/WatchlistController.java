@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 import javafx.stage.Stage;
 
@@ -29,7 +28,6 @@ public class WatchlistController implements Initializable {
     public JFXButton homeBtn;
 
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
-
     private final WatchlistRepository watchlistRepository;
     {
         watchlistRepository = new WatchlistRepository();
@@ -37,7 +35,6 @@ public class WatchlistController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             List<WatchlistMovieEntity> watchlistData = watchlistRepository.getWatchlist();  // Get watchlist data from database
             List<Movie> watchlistMovies = MovieEntity.toMovies(watchlistData);              // Convert watchlist data to Movie objects
@@ -47,10 +44,8 @@ public class WatchlistController implements Initializable {
         } catch (DatabaseException e) {
             System.out.println("Error getting watchlist data: " + e.getMessage());
         }
-        // Sort button's event handler
-        homeBtn.setOnAction(actionEvent -> {
-            switchToHome(actionEvent);
-        });
+
+        homeBtn.setOnAction(actionEvent -> switchToHome(actionEvent)); // Sort button's event handler
     }
 
     public void switchToHome(ActionEvent event) {
@@ -58,7 +53,7 @@ public class WatchlistController implements Initializable {
         HomeController.isInHome = true;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
         Parent watchlistRoot = loader.load();
-        Scene watchlistScene = new Scene(watchlistRoot);
+        Scene watchlistScene = new Scene(watchlistRoot, 1111, 600);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(watchlistScene);

@@ -37,10 +37,6 @@ public class MovieEntity {
     @DatabaseField()
     private double rating;
 
-
-
-
-    
     public MovieEntity() {
     }
 

@@ -12,7 +12,7 @@
       <padding>
          <Insets bottom="7.0" left="10.0" top="7.0"/>
       </padding>
-      <HBox minHeight="70.0" minWidth="1100.0" prefHeight="50.0" prefWidth="1100.0" spacing="5.0"
+      <HBox minHeight="70.0" minWidth="2000.0" prefHeight="50.0" prefWidth="2000.0" spacing="5.0"
             styleClass="background-black" stylesheets="@styles.css">
          <padding>
             <Insets bottom="20.0" left="10.0" top="20.0"/>
@@ -41,7 +41,9 @@
          <JFXButton fx:id="watchlistBtn" alignment="CENTER" minHeight="25.0" minWidth="125.0" prefHeight="25.0"
                     prefWidth="125.0" styleClass="button" stylesheets="@styles.css" text="My Watchlist"
                     textAlignment="CENTER" translateX="60.0" translateY="5.0"/>
+         <StackPane fx:id="alertPane" styleClass="red-alert" stylesheets="@styles.css" translateX="-1020.0"/>
       </HBox>
    </HBox>
-   <JFXListView fx:id="movieListView" minHeight="500.0" minWidth="1100.0" prefHeight="500.0" prefWidth="1100.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+   <JFXListView fx:id="movieListView" minHeight="500.0" minWidth="1100.0" prefHeight="500.0" prefWidth="1100.0"
+                style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS"/>
 </VBox>

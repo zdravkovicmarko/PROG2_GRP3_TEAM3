@@ -64,3 +64,9 @@
     -fx-text-fill: #ffffff;
     -fx-font-size: 13.5;
 }
+
+.red-alert {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+}
