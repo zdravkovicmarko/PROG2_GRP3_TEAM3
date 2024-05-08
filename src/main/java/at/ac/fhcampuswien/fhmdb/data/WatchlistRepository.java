@@ -28,13 +28,12 @@ public class WatchlistRepository  {
             List<WatchlistMovieEntity> existingMovies = dao.queryForEq("apiId", movie.getApiId());
 
             if (existingMovies.isEmpty()) { // Movie with same apiId in watchlist?
-                dao.create(movie);          // No, add movie
-                return 0;
+                dao.create(movie);
             }
-            return 0;                       // Yes, don't add duplicate
         } catch (SQLException e) {
             throw new DatabaseException(e);
         }
+        return 0;
     }
 
     public int removeFromWatchlist(String apiId) throws DatabaseException {

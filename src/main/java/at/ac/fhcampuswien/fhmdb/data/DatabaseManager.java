@@ -23,7 +23,6 @@ public class DatabaseManager {
             createConnectionSource();
             createDaos();
             createTables();
-            MovieRepository.removeAll();
         } catch (DatabaseException e) {
             System.out.println(e.getMessage());
         }

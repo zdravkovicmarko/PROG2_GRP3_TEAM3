@@ -6,7 +6,6 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.StringJoiner;
 
 import static at.ac.fhcampuswien.fhmdb.data.DatabaseManager.connectionSource;
 
@@ -26,13 +25,13 @@ public class MovieRepository {
         }
     }
 
-    public static int removeAll() throws DatabaseException {
+    public int removeAll() throws DatabaseException {
         try {
             TableUtils.clearTable(connectionSource, MovieEntity.class);
-            return 0;
         } catch (SQLException e) {
             throw new DatabaseException(e);
         }
+        return 0;
     }
 
     public MovieEntity getMovie(long id) throws DatabaseException {
@@ -44,32 +43,16 @@ public class MovieRepository {
     }
 
     public int addAllMovies(List<Movie> movies) throws DatabaseException {
-        try {
         if (movies != null) {
-            for (Movie movie : movies) {
-                List<String> genreList = movie.getGenres();
-                StringJoiner stringJoiner = new StringJoiner(", ");
-                for (String str : genreList) {
-                    stringJoiner.add(str);
+            List<MovieEntity> movieEntities = MovieEntity.fromMovies(movies);
+            try {
+                for (MovieEntity movieEntity : movieEntities) {
+                    dao.create(movieEntity);
                 }
-                String genreAsString = stringJoiner.toString();
-
-                MovieEntity movieEntity = new MovieEntity(
-                        movie.getId(),
-                        movie.getTitle(),
-                        movie.getDescription(),
-                        genreAsString,
-                        movie.getReleaseYear(),
-                        movie.getImgUrl(),
-                        movie.getLengthInMinutes(),
-                        movie.getRating()
-                );
-                dao.create(movieEntity);
+            } catch (SQLException e) {
+                throw new DatabaseException(e);
             }
         }
         return 0;
-        } catch (SQLException e) {
-            throw new DatabaseException(e);
-        }
     }
 }

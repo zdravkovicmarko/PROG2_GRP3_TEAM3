@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -61,9 +62,15 @@ public class HomeController implements Initializable {
         // Fetch movies & handle movie UI elements at start
         try {
             allMovies = movieAPI.fetchMovies(null, null, 0, 0);
+            MovieRepository movieRepository = new MovieRepository();
+            movieRepository.removeAll();
+            movieRepository.addAllMovies(allMovies);
         } catch (MovieAPIException e) {
             allMovies = exceptionHandler(null, null, 0, 0);
+        } catch (DatabaseException e) {
+            System.out.println("Error initialising database: " + e.getMessage());
         }
+
         if (allMovies != null) {
             observableMovies.clear();
             observableMovies.addAll(allMovies);
@@ -117,9 +124,9 @@ public class HomeController implements Initializable {
         if (rating != null && !rating.isEmpty() && !rating.equals("ALL")) {
             ratingValue = Double.parseDouble(rating);
         }
-        List<Movie> matchingMovies = new ArrayList<>();
 
         // Fetch movies based on search parameters
+        List<Movie> matchingMovies;
         try {
             if ("ALL".equals(genre)) {
                 matchingMovies = movieAPI.fetchMovies(searchQuery, null, releaseYearValue, ratingValue);
@@ -214,7 +221,8 @@ public class HomeController implements Initializable {
     }
 
     public List<Movie> exceptionFilter(List<Movie> movieList, String searchQuery, String genre, int releaseYear, double rating) {
-        String search = searchQuery.trim().toLowerCase();
+        String search = (searchQuery == null) ? "" : searchQuery.trim().toLowerCase();
+
         return movieList.stream()
                 .filter(movie ->
                         (genre == null || genre.equals("ALL") || movie.getGenres().contains(genre)) &&

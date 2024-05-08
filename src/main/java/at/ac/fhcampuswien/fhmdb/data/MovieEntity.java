@@ -96,17 +96,11 @@ public class MovieEntity {
 
     }
 
-    public List<MovieEntity> fromMovies (List<Movie> movies) {
-        int databaseID = 1;
+    public static List<MovieEntity> fromMovies(List<Movie> movies) {
         if (movies != null) {
             List<MovieEntity> movieEntities = new ArrayList<>();
             for (Movie movie : movies) {
-                List<String> genreList = movie.getGenres();
-                StringJoiner stringJoiner = new StringJoiner(", ");
-                for (String str : genreList) {
-                    stringJoiner.add(str);
-                }
-                String genreAsString = stringJoiner.toString();
+                String genreAsString = genresToString(movie.getGenres());
 
                 MovieEntity movieEntity = new MovieEntity(
                         movie.getId(),
@@ -120,7 +114,6 @@ public class MovieEntity {
                 );
 
                 movieEntities.add(movieEntity);
-                databaseID++;
             }
             return movieEntities;
         }
