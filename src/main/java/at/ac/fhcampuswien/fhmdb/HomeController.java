@@ -54,9 +54,11 @@ public class HomeController implements Initializable {
     public static List<Movie> allMovies;
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
     public static boolean isInHome = true;
+    MovieSorter movieSorter;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        movieSorter = new MovieSorter(observableMovies);
         alert = new Alert(alertPane);
 
         // Fetch movies & handle movie UI elements at start
@@ -154,13 +156,13 @@ public class HomeController implements Initializable {
         if (!wantsAscSort) {comparator = comparator.reversed();}
         observableMovies.sort(comparator);
     }
-    
-    public void eventSortButton(){
+
+    public void eventSortButton() {
         if (sortBtn.getText().equals("Sort (asc)")) {
-            sortAlphabetically(true, observableMovies);
+            movieSorter.sortAscending();
             sortBtn.setText("Sort (desc)");
         } else {
-            sortAlphabetically(false, observableMovies);
+            movieSorter.sortDescending();
             sortBtn.setText("Sort (asc)");
         }
     }
