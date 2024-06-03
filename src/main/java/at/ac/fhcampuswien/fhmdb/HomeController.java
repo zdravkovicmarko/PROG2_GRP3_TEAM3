@@ -173,6 +173,7 @@ public class HomeController implements Initializable {
         try {
             isInHome = false;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("watchlist-view.fxml"));
+            loader.setControllerFactory(new MyFactory());  // Set the custom factory here
             Parent watchlistRoot = loader.load();
             Scene watchlistScene = new Scene(watchlistRoot, 1111, 600);
 
@@ -208,15 +209,15 @@ public class HomeController implements Initializable {
 
     public List<Movie> exceptionHandler(String searchQuery, String genre, int releaseYearValue, double ratingValue) {
         try {
-        alert.showRedAlert("Make sure you have a stable internet connection!");
-        observableMovies.clear();
+            alert.showRedAlert("Make sure you have a stable internet connection!");
+            observableMovies.clear();
 
-        List<Movie> listFromDatabase = MovieEntity.toMovies(movieRepository.getAllMovies());
+            List<Movie> listFromDatabase = MovieEntity.toMovies(movieRepository.getAllMovies());
 
-        if (!listFromDatabase.isEmpty()) {
-            return exceptionFilter(listFromDatabase, searchQuery, genre, releaseYearValue, ratingValue);
-        }
-        return null;
+            if (!listFromDatabase.isEmpty()) {
+                return exceptionFilter(listFromDatabase, searchQuery, genre, releaseYearValue, ratingValue);
+            }
+            return null;
         } catch (DatabaseException e) {
             System.out.println("Error getting all movies from database: " + e.getMessage());
             return null;

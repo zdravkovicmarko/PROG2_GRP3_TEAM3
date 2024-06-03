@@ -18,7 +18,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.stage.Stage;
 
 public class WatchlistController implements Initializable {
@@ -42,19 +43,20 @@ public class WatchlistController implements Initializable {
             System.out.println("Error getting watchlist data: " + e.getMessage());
         }
 
-        homeBtn.setOnAction(actionEvent -> switchToHome(actionEvent)); // Sort button's event handler
+        homeBtn.setOnAction(this::switchToHome); // Sort button's event handler
     }
 
     public void switchToHome(ActionEvent event) {
         try {
-        HomeController.isInHome = true;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
-        Parent watchlistRoot = loader.load();
-        Scene watchlistScene = new Scene(watchlistRoot, 1111, 600);
+            HomeController.isInHome = true;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
+            loader.setControllerFactory(new MyFactory());  // Set the custom factory here
+            Parent homeRoot = loader.load();
+            Scene homeScene = new Scene(homeRoot, 1111, 600);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(watchlistScene);
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(homeScene);
+            stage.show();
         } catch (IOException e) {
             System.out.println("Error switching to home: " + e.getMessage());
         }

@@ -367,6 +367,20 @@ public void movieList() {
         assertEquals(expectedMovies, filteredMovies);
     }
 
+    @Test
+    public void testSingletonInstances() {
+        MyFactory factory = new MyFactory();
+
+        HomeController homeController1 = (HomeController) factory.call(HomeController.class);
+        HomeController homeController2 = (HomeController) factory.call(HomeController.class);
+        assertSame(homeController1, homeController2, "HomeController instances are not the same");
+
+        WatchlistController watchlistController1 = (WatchlistController) factory.call(WatchlistController.class);
+        WatchlistController watchlistController2 = (WatchlistController) factory.call(WatchlistController.class);
+        assertSame(watchlistController1, watchlistController2, "WatchlistController instances are not the same");
+    }
+}
+
     /*
     @Test
     void query_ignores_uppercase(){
@@ -550,4 +564,3 @@ public void movieList() {
     }
 
 */
-}
