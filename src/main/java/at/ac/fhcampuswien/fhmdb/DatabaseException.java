@@ -2,7 +2,7 @@ package at.ac.fhcampuswien.fhmdb;
 
 import java.sql.SQLException;
 
-public class DatabaseException extends SQLException {
+public class DatabaseException extends SQLException { // Besser extends Exception im Ausnahmefall
     public DatabaseException() {}
 
     public DatabaseException(String message) {

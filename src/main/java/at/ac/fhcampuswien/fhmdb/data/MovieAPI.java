@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.data;
 
 import at.ac.fhcampuswien.fhmdb.MovieAPIException;
-import javafx.scene.control.Label;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,27 +24,19 @@ public class MovieAPI {
 
     // Method to fetch movies from API
     public List<Movie> fetchMovies(String query, String genre, int releaseYear, double ratingFrom) throws MovieAPIException {
-        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(BASE_URL)).newBuilder();
+        // Use MovieUrlBuilder to build URL
+        String url = new MovieUrlBuilder()
+                .setQuery(query)
+                .setGenre(genre)
+                .setReleaseYear(releaseYear)
+                .setRatingFrom(ratingFrom)
+                .build();
 
-        // Add query parameters to URL builder
-        if (query != null && !query.isEmpty()) {
-            urlBuilder.addQueryParameter("query", query);
-        }
-        if (genre != null && !genre.isEmpty()) {
-            urlBuilder.addQueryParameter("genre", genre);
-        }
-        if (releaseYear > 0) {
-            urlBuilder.addQueryParameter("releaseYear", String.valueOf(releaseYear));
-        }
-        if (ratingFrom > 0) {
-            urlBuilder.addQueryParameter("ratingFrom", String.valueOf(ratingFrom));
-        }
-
-        System.out.println("\n\n" + urlBuilder + "\n");
+        System.out.println("\n\n" + url + "\n");
 
         // Build request
         Request request = new Request.Builder()
-                .url(urlBuilder.toString())
+                .url(url)
                 .header("User-Agent", USER_AGENT)
                 .build();
 
