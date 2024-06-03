@@ -29,7 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Observer {
     @FXML
     public JFXListView movieListView;
     @FXML
@@ -110,6 +110,15 @@ public class HomeController implements Initializable {
         searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventFilter(); } });
         sortBtn.setOnAction(actionEvent -> eventSortButton());
         watchlistBtn.setOnAction(actionEvent -> switchToWatchlist(actionEvent));
+
+        // Register HomeController as an observer to WatchlistRepository
+        WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
+        watchlistRepository.addObserver(this);
+    }
+
+    @Override
+    public void update(String message) {
+        alert.showRedAlert(message);
     }
 
     public void eventFilter() {
@@ -208,15 +217,15 @@ public class HomeController implements Initializable {
 
     public List<Movie> exceptionHandler(String searchQuery, String genre, int releaseYearValue, double ratingValue) {
         try {
-        alert.showRedAlert("Make sure you have a stable internet connection!");
-        observableMovies.clear();
+            alert.showRedAlert("Make sure you have a stable internet connection!");
+            observableMovies.clear();
 
-        List<Movie> listFromDatabase = MovieEntity.toMovies(movieRepository.getAllMovies());
+            List<Movie> listFromDatabase = MovieEntity.toMovies(movieRepository.getAllMovies());
 
-        if (!listFromDatabase.isEmpty()) {
-            return exceptionFilter(listFromDatabase, searchQuery, genre, releaseYearValue, ratingValue);
-        }
-        return null;
+            if (!listFromDatabase.isEmpty()) {
+                return exceptionFilter(listFromDatabase, searchQuery, genre, releaseYearValue, ratingValue);
+            }
+            return null;
         } catch (DatabaseException e) {
             System.out.println("Error getting all movies from database: " + e.getMessage());
             return null;
