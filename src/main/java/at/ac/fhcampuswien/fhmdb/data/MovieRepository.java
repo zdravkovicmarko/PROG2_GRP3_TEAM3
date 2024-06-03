@@ -12,9 +12,19 @@ import static at.ac.fhcampuswien.fhmdb.data.DatabaseManager.connectionSource;
 public class MovieRepository {
 
     Dao<MovieEntity, Long> dao;
+    private static MovieRepository instance;
 
-    public MovieRepository() {
+    // Private constructor
+    private MovieRepository() {
         this.dao = DatabaseManager.getDatabaseManager().getMovieDao();
+    }
+
+    // Public method to provide access to the singleton instance
+    public static synchronized MovieRepository getInstance() {
+        if (instance == null) {
+            instance = new MovieRepository();
+        }
+        return instance;
     }
 
     public List<MovieEntity> getAllMovies() throws DatabaseException {

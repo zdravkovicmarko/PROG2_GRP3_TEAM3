@@ -28,10 +28,7 @@ public class WatchlistController implements Initializable {
     public JFXButton homeBtn;
 
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
-    private final WatchlistRepository watchlistRepository;
-    {
-        watchlistRepository = new WatchlistRepository();
-    }
+    private final WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,7 +62,6 @@ public class WatchlistController implements Initializable {
 
     protected final RemoveFromWatchlistEventHandler<Movie> RemoveFromWatchlistClicked = movie -> {
         try {
-            WatchlistRepository watchlistRepository = new WatchlistRepository();
             watchlistRepository.removeFromWatchlist(movie.getId());
 
             // Update UI reflecting removal

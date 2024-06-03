@@ -55,6 +55,7 @@ public class HomeController implements Initializable {
     public static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
     public static boolean isInHome = true;
     MovieSorter movieSorter;
+    private MovieRepository movieRepository;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,7 +65,7 @@ public class HomeController implements Initializable {
         // Fetch movies & handle movie UI elements at start
         try {
             allMovies = movieAPI.fetchMovies(null, null, 0, 0);
-            MovieRepository movieRepository = new MovieRepository();
+            this.movieRepository = MovieRepository.getInstance();
             movieRepository.removeAll();
             movieRepository.addAllMovies(allMovies);
         } catch (MovieAPIException e) {
@@ -184,7 +185,7 @@ public class HomeController implements Initializable {
 
     protected final AddToWatchlistEventHandler<Movie> AddToWatchlistClicked = movie -> {
         try {
-            WatchlistRepository watchlistRepository = new WatchlistRepository();
+            WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
             List<String> genreList = movie.getGenres();
             WatchlistMovieEntity watchlistMovie = new WatchlistMovieEntity(
                     movie.getId(),
@@ -209,7 +210,6 @@ public class HomeController implements Initializable {
         alert.showRedAlert("Make sure you have a stable internet connection!");
         observableMovies.clear();
 
-        MovieRepository movieRepository = new MovieRepository();
         List<Movie> listFromDatabase = MovieEntity.toMovies(movieRepository.getAllMovies());
 
         if (!listFromDatabase.isEmpty()) {
