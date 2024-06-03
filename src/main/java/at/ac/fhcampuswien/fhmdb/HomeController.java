@@ -29,7 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Observer {
     @FXML
     public JFXListView movieListView;
     @FXML
@@ -110,6 +110,15 @@ public class HomeController implements Initializable {
         searchField.setOnKeyReleased(event -> { if (event.getCode() == KeyCode.ENTER) { eventFilter(); } });
         sortBtn.setOnAction(actionEvent -> eventSortButton());
         watchlistBtn.setOnAction(actionEvent -> switchToWatchlist(actionEvent));
+
+        // Register HomeController as an observer to WatchlistRepository
+        WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
+        watchlistRepository.addObserver(this);
+    }
+
+    @Override
+    public void update(String message) {
+        alert.showRedAlert(message);
     }
 
     public void eventFilter() {
